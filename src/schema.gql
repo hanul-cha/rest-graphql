@@ -1,0 +1,12 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Menu {
+  id: Int!
+  menuType: String!
+}
+
+type Query {
+  menu: Menu!
+}
