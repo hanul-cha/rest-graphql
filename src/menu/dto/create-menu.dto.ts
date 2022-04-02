@@ -1,6 +1,7 @@
-import { Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
-export class createMenuInput {
+@InputType()
+export class CreateMenuInput {
   @Field()
   title: string;
 

@@ -4,9 +4,25 @@
 
 type Menu {
   id: Int!
+  title: String!
+  contents: String!
+  img: String!
+  price: Float!
   menuType: String!
 }
 
 type Query {
-  menu: Menu!
+  menu: [Menu!]!
+}
+
+type Mutation {
+  createMenu(createMenuInput: CreateMenuInput!): Menu!
+}
+
+input CreateMenuInput {
+  title: String!
+  contents: String!
+  img: String!
+  price: Float!
+  menuType: String!
 }

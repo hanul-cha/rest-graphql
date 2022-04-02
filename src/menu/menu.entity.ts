@@ -29,9 +29,19 @@ export class Menu {
   @Field()
   menuType: string;
 
-  @Column({ type: 'timestamp' })
+  @Column({
+    type: 'timestamp',
+    name: 'created_at',
+    readonly: true,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createAt: number;
 
-  @Column({ type: 'timestamp' })
+  @Column({
+    type: 'timestamp',
+    name: 'update_at',
+    readonly: true,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   updateAt: number;
 }
