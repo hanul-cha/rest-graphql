@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { User } from './auth.entity';
 import { AuthService } from './auth.service';
@@ -9,7 +10,7 @@ export class AuthResolver {
 
   @Mutation(() => User)
   createUser(
-    @Args('createUserInput') createUserInput: CreateAuthInput,
+    @Args('createUserInput', ValidationPipe) createUserInput: CreateAuthInput,
   ): Promise<User> {
     return this.authService.createUser(createUserInput);
   }
