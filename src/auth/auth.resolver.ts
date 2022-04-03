@@ -1,5 +1,6 @@
-import { ValidationPipe } from '@nestjs/common';
+import { Req, UseGuards, ValidationPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { AuthGuard } from '@nestjs/passport';
 import { User } from './auth.entity';
 import { AuthService } from './auth.service';
 import { AuthInput } from './dto/auth-role.dto';
@@ -11,9 +12,10 @@ export class AuthResolver {
   constructor(private authService: AuthService) {}
 
   @Query(() => String)
+  //   @UseGuards(AuthGuard('asdfasdfasdf'))
   signIn(
     @Args('signInAuthInput', ValidationPipe) signInAuthInput: SignInAuthInput,
-  ): Promise<string> {
+  ): Promise<{ accessToken: string }> {
     return this.authService.signIn(signInAuthInput);
   }
 
@@ -29,5 +31,11 @@ export class AuthResolver {
     @Args('createUserInput', ValidationPipe) createUserInput: CreateAuthInput,
   ): Promise<User> {
     return this.authService.createUser(createUserInput);
+  }
+
+  @Query(() => String)
+  @UseGuards(AuthGuard())
+  test(@Req() req) {
+    console.log(req);
   }
 }

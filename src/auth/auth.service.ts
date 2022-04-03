@@ -43,21 +43,32 @@ export class AuthService {
   }
 
   async addRoles(authInput: AuthInput): Promise<User> {
-    const user = await this.UserRepository.findOne(authInput.userId);
+    const user = await this.UserRepository.findOne({
+      userId: authInput.userId,
+    });
+    user.roles.map((role) => {
+      if (role === authInput.roles) {
+        throw new GraphQLError('This role has already been added');
+      }
+    });
     user.roles.push(authInput.roles);
     return this.UserRepository.save(user);
   }
 
-  async signIn(signInAuthInput: SignInAuthInput): Promise<string> {
+  async signIn(
+    signInAuthInput: SignInAuthInput,
+  ): Promise<{ accessToken: string }> {
     const { userId, password } = signInAuthInput;
     const user = await this.UserRepository.findOne({ userId });
 
+    console.log(user);
+
     if (user && (await bcrypt.compare(password, user.password))) {
-      const payload = { userName: user.name, roles: user.roles };
+      const payload = { id: user.id, roles: user.roles };
       const accessToken = await this.jwtService.sign(payload);
-      return accessToken;
+      return { accessToken };
     } else {
-      return 'login failed';
+      throw new GraphQLError('login failed');
     }
   }
 }
