@@ -4,7 +4,7 @@ import { Column } from 'typeorm';
 import { AuthRole } from './auth-role.dto';
 
 @InputType()
-export class CreateMenuInput {
+export class CreateAuthInput {
   @Field()
   userId!: string;
 
@@ -12,12 +12,12 @@ export class CreateMenuInput {
   password!: string;
 
   @Field()
-  name?: string;
+  name: string;
 
-  @Field()
-  address?: number;
+  @Field({ nullable: true })
+  address?: string;
 
-  @Field(() => [AuthRole])
-  @Column({ type: 'json' })
-  roles!: AuthRole[] | null;
+  //   @Field(() => [AuthRole])
+  //   @Column({ type: 'json' })
+  //   roles!: AuthRole[] | null;
 }

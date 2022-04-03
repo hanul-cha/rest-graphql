@@ -11,12 +11,21 @@ type Menu {
   menuType: String!
 }
 
+type User {
+  id: Int!
+  userId: String!
+  password: String!
+  name: String!
+  address: String!
+}
+
 type Query {
   menu: [Menu!]!
 }
 
 type Mutation {
   createMenu(createMenuInput: CreateMenuInput!): Menu!
+  createUser(createUserInput: CreateAuthInput!): User!
 }
 
 input CreateMenuInput {
@@ -25,4 +34,11 @@ input CreateMenuInput {
   img: String!
   price: Float!
   menuType: String!
+}
+
+input CreateAuthInput {
+  userId: String!
+  password: String!
+  name: String!
+  address: String
 }

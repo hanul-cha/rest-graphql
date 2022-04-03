@@ -18,14 +18,32 @@ export class User extends BaseEntity {
   password: string;
 
   @Field(() => String)
-  @Column({ type: String, default: () => '(이름없음)' })
+  @Column({ type: String })
   name: string;
 
   @Field(() => String)
   @Column({ type: String, default: null })
   address: string;
 
-  @Field(() => [AuthRole])
-  @Column({ type: 'json', default: [AuthRole.ADMIN_GUEST] })
-  roles!: AuthRole[] | null;
+  @Column({
+    type: 'json',
+    default: null,
+  })
+  roles?: AuthRole[] | null;
+
+  @Column({
+    type: 'timestamp',
+    name: 'created_at',
+    readonly: true,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createAt: number;
+
+  @Column({
+    type: 'timestamp',
+    name: 'update_at',
+    readonly: true,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  updateAt: number;
 }
