@@ -21,6 +21,12 @@ type User {
 
 type Query {
   menu: [Menu!]!
+  signIn(signInAuthInput: SignInAuthInput!): String!
+}
+
+input SignInAuthInput {
+  userId: String!
+  password: String!
 }
 
 type Mutation {
