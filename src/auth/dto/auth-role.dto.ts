@@ -1,3 +1,4 @@
+import { Field, InputType } from '@nestjs/graphql';
 import { GraphQLEnumType } from 'graphql';
 
 export enum AuthRole {
@@ -25,3 +26,12 @@ export const GraphQLAuthRole = new GraphQLEnumType({
     },
   },
 });
+
+@InputType()
+export class AuthInput {
+  @Field()
+  roles: AuthRole;
+
+  @Field()
+  userId: string;
+}

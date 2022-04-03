@@ -3,16 +3,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { GraphQLError } from 'graphql';
 import { Repository } from 'typeorm';
 import { User } from './auth.entity';
-import { AuthRole } from './dto/auth-role.dto';
+import { AuthInput, AuthRole } from './dto/auth-role.dto';
 import { CreateAuthInput } from './dto/create-auth-credential.dto';
 import * as bcrypt from 'bcryptjs';
 import { SignInAuthInput } from './dto/signIn-auth-credential.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
     private UserRepository: Repository<User>,
+    private jwtService: JwtService,
   ) {}
 
   async createUser(createAuthDto: CreateAuthInput): Promise<User> {
@@ -40,12 +42,20 @@ export class AuthService {
     return user;
   }
 
+  async addRoles(authInput: AuthInput): Promise<User> {
+    const user = await this.UserRepository.findOne(authInput.userId);
+    user.roles.push(authInput.roles);
+    return this.UserRepository.save(user);
+  }
+
   async signIn(signInAuthInput: SignInAuthInput): Promise<string> {
     const { userId, password } = signInAuthInput;
     const user = await this.UserRepository.findOne({ userId });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      return 'login success';
+      const payload = { userName: user.name, roles: user.roles };
+      const accessToken = await this.jwtService.sign(payload);
+      return accessToken;
     } else {
       return 'login failed';
     }

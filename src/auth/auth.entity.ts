@@ -36,7 +36,7 @@ export class User extends BaseEntity {
     type: 'json',
     default: null,
   })
-  roles?: AuthRole[] | null;
+  roles: AuthRole[] | null;
 
   @Column({
     type: 'timestamp',

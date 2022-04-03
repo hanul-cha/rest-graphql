@@ -31,6 +31,7 @@ input SignInAuthInput {
 
 type Mutation {
   createMenu(createMenuInput: CreateMenuInput!): Menu!
+  addRoles(authInput: AuthInput!): User!
   createUser(createUserInput: CreateAuthInput!): User!
 }
 
@@ -40,6 +41,11 @@ input CreateMenuInput {
   img: String!
   price: Float!
   menuType: String!
+}
+
+input AuthInput {
+  roles: String!
+  userId: String!
 }
 
 input CreateAuthInput {
