@@ -42,6 +42,10 @@ export class AuthService {
     return user;
   }
 
+  async findAll(): Promise<User[]> {
+    return this.UserRepository.find();
+  }
+
   async addRoles(authInput: AuthInput): Promise<User> {
     const user = await this.UserRepository.findOne({
       userId: authInput.userId,

@@ -1,23 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ExtractJwt, Strategy } from 'passport-jwt';
-import { Repository } from 'typeorm';
-import { User } from './auth.entity';
+// import { Injectable } from '@nestjs/common';
+// import { PassportStrategy } from '@nestjs/passport';
+// import { InjectRepository } from '@nestjs/typeorm';
+// import { ExtractJwt, Strategy } from 'passport-jwt';
+// import { Repository } from 'typeorm';
+// import { User } from './auth.entity';
 
-@Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
-  ) {
-    super({
-      secretOrKey: 'SecretCode-4224',
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    });
-  }
+// @Injectable()
+// export class JwtStrategy extends PassportStrategy(Strategy) {
+//   constructor(
+//     @InjectRepository(User)
+//     private userRepository: Repository<User>,
+//   ) {
+//     super({
+//       secretOrKey: 'SecretCode-4224',
+//       jwtFromArgs: ExtractJwt.fromAuthHeaderAsBearerToken(),
+//     });
+//   }
 
-  async validate(payload) {
-    console.log(payload);
-  }
-}
+//   async validate(payload) {
+//     // console.log(payload);
+//     // const { id } = payload;
+//     // const user = await this.userRepository.findOne({ id })
+
+//   }
+// }

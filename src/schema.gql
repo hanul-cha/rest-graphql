@@ -22,7 +22,7 @@ type User {
 type Query {
   menu: [Menu!]!
   signIn(signInAuthInput: SignInAuthInput!): String!
-  test: String!
+  user: [User!]!
 }
 
 input SignInAuthInput {
