@@ -12,13 +12,12 @@ const matchRoles = (roles: string[], userRoles: string) => {
 export class RolesGuard implements CanActivate {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>,
     private reflector: Reflector,
   ) {}
 
   canActivate(context: ExecutionContext): boolean {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
-    console.log(roles);
+    console.log('RolesGuard: ', roles);
     if (!roles) {
       return true;
     }

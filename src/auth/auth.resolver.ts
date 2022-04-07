@@ -1,6 +1,7 @@
 import { Req, UseGuards, ValidationPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from 'src/role.guard';
 import { Roles } from 'src/roles.decorator';
 import { User } from './auth.entity';
 import { AuthService } from './auth.service';
@@ -21,6 +22,7 @@ export class AuthResolver {
 
   @Query(() => [User])
   @Roles('admin')
+  @UseGuards(RolesGuard)
   user(): Promise<User[]> {
     return this.authService.findAll();
   }
