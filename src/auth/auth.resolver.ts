@@ -1,8 +1,6 @@
-import { Req, UseGuards, ValidationPipe } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from 'src/role.guard';
-import { Roles } from 'src/roles.decorator';
+import { ValidationPipe } from '@nestjs/common';
+import { Args, Info, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Authorize } from 'src/roles.decorator';
 import { User } from './auth.entity';
 import { AuthService } from './auth.service';
 import { AuthInput } from './dto/auth-role.dto';
@@ -13,20 +11,25 @@ import { SignInAuthInput } from './dto/signIn-auth-credential.dto';
 export class AuthResolver {
   constructor(private authService: AuthService) {}
 
-  @Query(() => String)
+  @Query(() => {
+    return String;
+  })
   signIn(
     @Args('signInAuthInput', ValidationPipe) signInAuthInput: SignInAuthInput,
-  ): Promise<{ accessToken: string }> {
+  ): Promise<string> {
     return this.authService.signIn(signInAuthInput);
   }
 
-  @Query(() => [User])
-  @Roles('admin')
-  @UseGuards(RolesGuard)
-  user(): Promise<User[]> {
-    return this.authService.findAll();
-  }
+  // // @Authorize('admin')
+  // // @UseGuards(RolesGuard, GqlAuthGuard)
+  // @Query(() => [User])
+  // async user(@Args() args: any, @Info() info: GraphQLResolveInfo) {
+  //   console.log(args);
+  //   console.log(info);
+  //   return this.authService.findAll();
+  // }
 
+  @Authorize('admin')
   @Mutation(() => User)
   addRoles(
     @Args('authInput', ValidationPipe) authInput: AuthInput,

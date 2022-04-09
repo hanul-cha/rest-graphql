@@ -59,18 +59,14 @@ export class AuthService {
     return this.UserRepository.save(user);
   }
 
-  async signIn(
-    signInAuthInput: SignInAuthInput,
-  ): Promise<{ accessToken: string }> {
+  async signIn(signInAuthInput: SignInAuthInput): Promise<string> {
     const { userId, password } = signInAuthInput;
     const user = await this.UserRepository.findOne({ userId });
-
-    console.log(user);
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload = { id: user.id, roles: user.roles };
       const accessToken = await this.jwtService.sign(payload);
-      return { accessToken };
+      return accessToken;
     } else {
       throw new GraphQLError('login failed');
     }

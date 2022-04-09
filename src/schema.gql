@@ -22,7 +22,6 @@ type User {
 type Query {
   menu: [Menu!]!
   signIn(signInAuthInput: SignInAuthInput!): String!
-  user: [User!]!
 }
 
 input SignInAuthInput {
