@@ -22,16 +22,7 @@ export class AuthResolver {
     return this.authService.signIn(signInAuthInput);
   }
 
-  // // @Authorize('admin')
-  // // @UseGuards(RolesGuard, GqlAuthGuard)
-  // @Query(() => [User])
-  // async user(@Args() args: any, @Info() info: GraphQLResolveInfo) {
-  //   console.log(args);
-  //   console.log(info);
-  //   return this.authService.findAll();
-  // }
-
-  @Authorize(AuthRole.ADMIN_DEVELOPER)
+  @Authorize([AuthRole.ADMIN_GUEST])
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Mutation(() => User)
   addRoles(
@@ -41,6 +32,8 @@ export class AuthResolver {
     return this.authService.addRoles(authInput);
   }
 
+  @Authorize(AuthRole.ADMIN_GUEST)
+  @UseGuards(GqlAuthGuard, RolesGuard)
   @Mutation(() => User)
   createUser(
     @Args('createUserInput', ValidationPipe) createUserInput: CreateAuthInput,
