@@ -1,7 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './auth/auth.entity';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 const matchRoles = (roles: string[], userRoles: string) => {
   return roles.some((role) => role === userRoles);
@@ -13,10 +12,11 @@ export class RolesGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    const ctx = GqlExecutionContext.create(context);
     console.log('RolesGuard: ', roles);
+    console.log('gqlContext: ', ctx.getContext().req.user);
 
-    const request = context.switchToHttp().getRequest();
-    const user = request.user;
-    return matchRoles(roles, user.roles);
+    return false;
+    // return matchRoles(roles, user.roles);
   }
 }

@@ -1,11 +1,13 @@
-import { ValidationPipe } from '@nestjs/common';
+import { UseGuards, ValidationPipe } from '@nestjs/common';
 import { Args, Info, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Authorize } from 'src/roles.decorator';
+import { Authorize } from 'src/auth/roles.decorator';
 import { User } from './auth.entity';
+import { GqlAuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
-import { AuthInput } from './dto/auth-role.dto';
+import { AuthInput, AuthRole } from './dto/auth-role.dto';
 import { CreateAuthInput } from './dto/create-auth-credential.dto';
 import { SignInAuthInput } from './dto/signIn-auth-credential.dto';
+import { RolesGuard } from './role.guard';
 
 @Resolver(() => User)
 export class AuthResolver {
@@ -29,11 +31,13 @@ export class AuthResolver {
   //   return this.authService.findAll();
   // }
 
-  @Authorize('admin')
+  @Authorize(AuthRole.ADMIN_DEVELOPER)
+  @UseGuards(GqlAuthGuard, RolesGuard)
   @Mutation(() => User)
   addRoles(
     @Args('authInput', ValidationPipe) authInput: AuthInput,
   ): Promise<User> {
+    console.log(authInput);
     return this.authService.addRoles(authInput);
   }
 

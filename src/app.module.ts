@@ -9,18 +9,28 @@ import { MenuModule } from './menu/menu.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeORMConfig } from './config/typeorm.config';
 import { AuthModule } from './auth/auth.module';
+import { GqlAuthGuard } from './auth/auth.guard';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 @Module({
   imports: [
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       driver: ApolloDriver,
+      // context: ({ req, connection }) => {
+      //   if (req) {
+      //     const user = req.headers.authorization;
+      //     return { ...req, user };
+      //   } else {
+      //     return connection;
+      //   }
+      // },
     }),
     TypeOrmModule.forRoot(typeORMConfig),
     MenuModule,
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, GqlAuthGuard],
 })
 export class AppModule {}
