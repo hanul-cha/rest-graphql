@@ -32,8 +32,6 @@ export class AuthResolver {
     return this.authService.addRoles(authInput);
   }
 
-  @Authorize(AuthRole.ADMIN_GUEST)
-  @UseGuards(GqlAuthGuard, RolesGuard)
   @Mutation(() => User)
   createUser(
     @Args('createUserInput', ValidationPipe) createUserInput: CreateAuthInput,
