@@ -1,5 +1,5 @@
 import { UseGuards, ValidationPipe } from '@nestjs/common';
-import { Args, Info, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Authorize } from 'src/auth/roles.decorator';
 import { User } from './auth.entity';
 import { GqlAuthGuard } from './auth.guard';
