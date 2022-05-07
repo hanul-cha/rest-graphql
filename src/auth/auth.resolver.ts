@@ -28,7 +28,6 @@ export class AuthResolver {
   addRoles(
     @Args('authInput', ValidationPipe) authInput: AuthInput,
   ): Promise<User> {
-    console.log(authInput);
     return this.authService.addRoles(authInput);
   }
 

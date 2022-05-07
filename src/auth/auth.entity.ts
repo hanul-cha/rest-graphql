@@ -7,6 +7,7 @@ import {
   Unique,
 } from 'typeorm';
 import { AuthRole } from './dto/auth-role.dto';
+import { AuthSearchQuestion } from './dto/auth-search-account.dto';
 
 @Entity()
 @Unique(['userId'])
@@ -37,6 +38,20 @@ export class User extends BaseEntity {
     default: null,
   })
   roles: AuthRole[] | null;
+
+  @Field(() => String)
+  @Column({
+    type: String,
+    name: 'question_for_search',
+  })
+  questionForSearch: AuthSearchQuestion;
+
+  @Field(() => String)
+  @Column({
+    type: String,
+    name: 'answer_for_search',
+  })
+  answerForSearch: string;
 
   @Column({
     type: 'timestamp',

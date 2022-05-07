@@ -17,6 +17,8 @@ type User {
   password: String!
   name: String!
   address: String!
+  questionForSearch: String!
+  answerForSearch: String!
 }
 
 type Query {
@@ -52,5 +54,7 @@ input CreateAuthInput {
   userId: String!
   password: String!
   name: String!
+  questionForSearch: String!
+  answerForSearch: String!
   address: String
 }

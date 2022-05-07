@@ -3,6 +3,7 @@ import { IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { GraphQLNonNull } from 'graphql';
 import { Column } from 'typeorm';
 import { AuthRole } from './auth-role.dto';
+import { AuthSearchQuestion } from './auth-search-account.dto';
 
 @InputType()
 export class CreateAuthInput {
@@ -23,9 +24,19 @@ export class CreateAuthInput {
 
   @Field()
   @IsString()
-  @MinLength(4)
+  @MinLength(1)
   @MaxLength(20)
   name: string;
+
+  @Field()
+  @IsString()
+  questionForSearch: AuthSearchQuestion;
+
+  @Field()
+  @IsString()
+  @MinLength(4)
+  @MaxLength(20)
+  answerForSearch: string;
 
   @Field({ nullable: true })
   //   @IsString()

@@ -18,7 +18,14 @@ export class AuthService {
   ) {}
 
   async createUser(createAuthDto: CreateAuthInput): Promise<User> {
-    const { userId, password, name, address } = createAuthDto;
+    const {
+      userId,
+      password,
+      name,
+      address,
+      questionForSearch,
+      answerForSearch,
+    } = createAuthDto;
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -29,6 +36,8 @@ export class AuthService {
       name,
       address,
       roles: [AuthRole.ADMIN_GUEST],
+      questionForSearch,
+      answerForSearch,
     });
 
     try {
