@@ -34,7 +34,7 @@ export class CreateAuthInput {
 
   @Field()
   @IsString()
-  @MinLength(4)
+  @MinLength(1)
   @MaxLength(20)
   answerForSearch: string;
 

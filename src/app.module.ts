@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeORMConfig } from './config/typeorm.config';
 import { AuthModule } from './auth/auth.module';
 import { GqlAuthGuard } from './auth/auth.guard';
+import { PokemonModule } from './pokemon/pokemon.module';
 import { JwtStrategy } from './auth/jwt.strategy';
 
 @Module({
@@ -29,6 +30,7 @@ import { JwtStrategy } from './auth/jwt.strategy';
     TypeOrmModule.forRoot(typeORMConfig),
     MenuModule,
     AuthModule,
+    PokemonModule,
   ],
   controllers: [AppController],
   providers: [AppService, GqlAuthGuard],
