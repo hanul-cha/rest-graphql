@@ -7,7 +7,7 @@ import {
   Unique,
 } from 'typeorm';
 import { AuthRole } from './dto/auth-role.dto';
-import { AuthSearchQuestion } from './dto/auth-search-account.dto';
+import { AuthSearchQuestion } from './dto/auth-search.dto';
 
 @Entity()
 @Unique(['userId'])

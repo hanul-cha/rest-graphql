@@ -3,7 +3,7 @@ import { IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { GraphQLNonNull } from 'graphql';
 import { Column } from 'typeorm';
 import { AuthRole } from './auth-role.dto';
-import { AuthSearchQuestion } from './auth-search-account.dto';
+import { AuthSearchQuestion } from './auth-search.dto';
 
 @InputType()
 export class CreateAuthInput {
