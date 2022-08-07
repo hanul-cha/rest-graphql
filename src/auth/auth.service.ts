@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { GraphQLError } from 'graphql';
 import { Repository } from 'typeorm';
 import { User } from './auth.entity';
 import { AuthInput, AuthRole } from './dto/auth-role.dto';
@@ -8,6 +7,8 @@ import { CreateAuthInput } from './dto/create-auth-credential.dto';
 import * as bcrypt from 'bcryptjs';
 import { SignInAuthInput } from './dto/signIn-auth-credential.dto';
 import { JwtService } from '@nestjs/jwt';
+import { GraphQLError } from 'graphql/error';
+import { ApolloError } from 'apollo-server-express';
 
 @Injectable()
 export class AuthService {
@@ -44,7 +45,7 @@ export class AuthService {
       await this.UserRepository.save(user);
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
-        throw new GraphQLError('Existing userid');
+        throw new ApolloError('중복된 아이디 입니다.', 'ER_DUP_ENTRY');
       }
     }
 
@@ -61,7 +62,7 @@ export class AuthService {
     });
     user.roles.map((role) => {
       if (role === authInput.roles) {
-        throw new GraphQLError('This role has already been added');
+        throw new ApolloError('This role has already been added');
       }
     });
     user.roles.push(authInput.roles);
@@ -73,11 +74,14 @@ export class AuthService {
     const user = await this.UserRepository.findOne({ userId });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      const payload = { id: user.id, roles: user.roles };
-      const accessToken = await this.jwtService.sign(payload);
+      const payload = { id: user.id, roles: user.roles, name: user.name };
+      const accessToken = this.jwtService.sign(payload);
       return accessToken;
     } else {
-      throw new GraphQLError('login failed');
+      throw new ApolloError(
+        'login failed: unknown user or password',
+        'LOGIN_FAILED',
+      );
     }
   }
 }
