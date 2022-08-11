@@ -1,5 +1,5 @@
 import { UseGuards, ValidationPipe } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Authorize } from 'src/auth/roles.decorator';
 import { User } from './auth.entity';
 import { GqlAuthGuard } from './auth.guard';
@@ -20,6 +20,13 @@ export class AuthResolver {
     @Args('signInAuthInput', ValidationPipe) signInAuthInput: SignInAuthInput,
   ): Promise<string> {
     return this.authService.signIn(signInAuthInput);
+  }
+
+  @Query(() => {
+    return User;
+  })
+  getUser(@Args('id', { type: () => Int }) id: number): Promise<User> {
+    return this.authService.getUser(id);
   }
 
   @Authorize([AuthRole.ADMIN_GUEST])

@@ -18,6 +18,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  async getUser(id: number): Promise<User> {
+    return this.UserRepository.findOne(id);
+  }
+
   async createUser(createAuthDto: CreateAuthInput): Promise<User> {
     const {
       userId,

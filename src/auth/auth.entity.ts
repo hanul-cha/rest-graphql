@@ -29,7 +29,7 @@ export class User extends BaseEntity {
   @Column({ type: String })
   name: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @Column({ type: String, default: null })
   address: string;
 

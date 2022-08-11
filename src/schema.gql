@@ -16,7 +16,7 @@ type User {
   userId: String!
   password: String!
   name: String!
-  address: String!
+  address: String
   questionForSearch: String!
   answerForSearch: String!
 }
@@ -24,6 +24,7 @@ type User {
 type Query {
   menu: [Menu!]!
   signIn(signInAuthInput: SignInAuthInput!): String!
+  getUser(id: Int!): User!
 }
 
 input SignInAuthInput {
