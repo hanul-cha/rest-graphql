@@ -1,5 +1,6 @@
 import { UseGuards, ValidationPipe } from '@nestjs/common';
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { AuthGuard } from '@nestjs/passport';
 import { Authorize } from 'src/auth/roles.decorator';
 import { User } from './auth.entity';
 import { GqlAuthGuard } from './auth.guard';
@@ -13,6 +14,7 @@ import { RolesGuard } from './role.guard';
 export class AuthResolver {
   constructor(private authService: AuthService) {}
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => {
     return String;
   })

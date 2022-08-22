@@ -16,6 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload) {
+    console.log(payload);
     return payload;
   }
   // 여기서 리턴한 값이 req.user에 담긴다 왜 하필 이름이 유저인지는 모르겠지만...

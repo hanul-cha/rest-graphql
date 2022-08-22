@@ -11,7 +11,6 @@ import { typeORMConfig } from './config/typeorm.config';
 import { AuthModule } from './auth/auth.module';
 import { GqlAuthGuard } from './auth/auth.guard';
 import { PokemonModule } from './pokemon/pokemon.module';
-import { JwtStrategy } from './auth/jwt.strategy';
 
 @Module({
   imports: [
