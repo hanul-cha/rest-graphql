@@ -1,5 +1,5 @@
-import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
-import { Query, QueryOptions, ReturnTypeFunc } from '@nestjs/graphql';
+import { applyDecorators, UseGuards } from '@nestjs/common';
+import { Query, QueryOptions, ReturnTypeFuncValue } from '@nestjs/graphql';
 import { AuthRole } from 'src/auth/dto/auth-role.dto';
 import { GqlAuthGuard } from 'src/guard/auth.guard';
 import { RolesGuard } from 'src/guard/role.guard';
@@ -7,14 +7,17 @@ import { Authorize } from './roles.decorator';
 
 interface QueryOption {
   roles?: AuthRole | AuthRole[];
-  return?: ReturnTypeFunc;
+  return?: ReturnTypeFuncValue;
   options?: QueryOptions;
 }
 
+// GqlAuthGuard 가드는 홀로 사용 가능하지만 RolesGuard는 req.user를 넘겨주는 가드와 사용가능합니다.
 export const GuardQuery = (option?: QueryOption) => {
   return applyDecorators(
     Authorize(option.roles ?? null),
     UseGuards(GqlAuthGuard, RolesGuard),
-    Query(option.return, option.options),
+    Query(() => {
+      return option.return;
+    }, option.options),
   );
 };

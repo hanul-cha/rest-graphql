@@ -4,7 +4,11 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthRole } from 'src/auth/dto/auth-role.dto';
 
 const matchRoles = (roles: AuthRole[], userRoles: AuthRole[]) => {
-  return roles.some((role) => userRoles.some((userRole) => role === userRole));
+  return roles.some((role) =>
+    userRoles.some(
+      (userRole) => role === userRole || userRole === AuthRole.ADMIN_DEVELOPER,
+    ),
+  );
 };
 
 @Injectable()

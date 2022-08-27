@@ -7,7 +7,6 @@ import { CreateAuthInput } from './dto/create-auth-credential.dto';
 import * as bcrypt from 'bcryptjs';
 import { SignInAuthInput } from './dto/signIn-auth-credential.dto';
 import { JwtService } from '@nestjs/jwt';
-import { GraphQLError } from 'graphql/error';
 import { ApolloError } from 'apollo-server-express';
 
 @Injectable()
@@ -40,7 +39,7 @@ export class AuthService {
       password: hashedPassword,
       name,
       address,
-      roles: [AuthRole.ADMIN_GUEST],
+      roles: [AuthRole.ADMIN_USER],
       questionForSearch,
       answerForSearch,
     });

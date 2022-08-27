@@ -12,7 +12,7 @@ type Menu {
 }
 
 type User {
-  id: Int!
+  id: ID!
   userId: String!
   password: String!
   name: String!

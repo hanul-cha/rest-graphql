@@ -23,23 +23,16 @@ export class AuthResolver {
     return this.authService.signIn(signInAuthInput);
   }
 
-  // @Authorize([AuthRole.ADMIN_GUEST])
-  // @UseGuards(GqlAuthGuard, RolesGuard)
-  // @Query(() => {
-  //   return User;
-  // })
   @GuardQuery({
-    roles: AuthRole.ADMIN_GUEST,
-    return: () => {
-      return User;
-    },
+    roles: [AuthRole.ADMIN_GUEST, AuthRole.ADMIN_USER],
+    return: User,
   })
   getUser(@Args('id', { type: () => Int }) id: number): Promise<User> {
     return this.authService.getUser(id);
   }
 
-  @Authorize([AuthRole.ADMIN_GUEST])
-  @UseGuards(GqlAuthGuard, RolesGuard) // GqlAuthGuard하나만 쓰면 안에 jwt 하고 RolesGuard옵션으로 추가 role검사하기
+  @Authorize(AuthRole.ADMIN_DEVELOPER)
+  @UseGuards(GqlAuthGuard, RolesGuard)
   @Mutation(() => User)
   addRoles(
     @Args('authInput', ValidationPipe) authInput: AuthInput,
