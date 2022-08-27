@@ -1,20 +1,18 @@
 import { UseGuards, ValidationPipe } from '@nestjs/common';
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { AuthGuard } from '@nestjs/passport';
-import { Authorize } from 'src/auth/roles.decorator';
+import { Authorize } from 'src/decorators/roles.decorator';
 import { User } from './auth.entity';
-import { GqlAuthGuard } from './auth.guard';
+import { GqlAuthGuard } from '../guard/auth.guard';
 import { AuthService } from './auth.service';
 import { AuthInput, AuthRole } from './dto/auth-role.dto';
 import { CreateAuthInput } from './dto/create-auth-credential.dto';
 import { SignInAuthInput } from './dto/signIn-auth-credential.dto';
-import { RolesGuard } from './role.guard';
+import { RolesGuard } from '../guard/role.guard';
 
 @Resolver(() => User)
 export class AuthResolver {
   constructor(private authService: AuthService) {}
 
-  @UseGuards(GqlAuthGuard)
   @Query(() => {
     return String;
   })
@@ -24,6 +22,8 @@ export class AuthResolver {
     return this.authService.signIn(signInAuthInput);
   }
 
+  @Authorize([AuthRole.ADMIN_GUEST])
+  @UseGuards(GqlAuthGuard, RolesGuard)
   @Query(() => {
     return User;
   })
@@ -32,7 +32,7 @@ export class AuthResolver {
   }
 
   @Authorize([AuthRole.ADMIN_GUEST])
-  @UseGuards(GqlAuthGuard, RolesGuard)
+  @UseGuards(GqlAuthGuard, RolesGuard) // GqlAuthGuard하나만 쓰면 안에 jwt 하고 RolesGuard옵션으로 추가 role검사하기
   @Mutation(() => User)
   addRoles(
     @Args('authInput', ValidationPipe) authInput: AuthInput,
