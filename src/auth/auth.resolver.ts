@@ -8,6 +8,7 @@ import { AuthInput, AuthRole } from './dto/auth-role.dto';
 import { CreateAuthInput } from './dto/create-auth-credential.dto';
 import { SignInAuthInput } from './dto/signIn-auth-credential.dto';
 import { RolesGuard } from '../guard/role.guard';
+import { GuardQuery } from 'src/decorators/query.decorator';
 
 @Resolver(() => User)
 export class AuthResolver {
@@ -22,10 +23,16 @@ export class AuthResolver {
     return this.authService.signIn(signInAuthInput);
   }
 
-  @Authorize([AuthRole.ADMIN_GUEST])
-  @UseGuards(GqlAuthGuard, RolesGuard)
-  @Query(() => {
-    return User;
+  // @Authorize([AuthRole.ADMIN_GUEST])
+  // @UseGuards(GqlAuthGuard, RolesGuard)
+  // @Query(() => {
+  //   return User;
+  // })
+  @GuardQuery({
+    roles: AuthRole.ADMIN_GUEST,
+    return: () => {
+      return User;
+    },
   })
   getUser(@Args('id', { type: () => Int }) id: number): Promise<User> {
     return this.authService.getUser(id);

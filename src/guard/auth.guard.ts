@@ -19,6 +19,8 @@ export class GqlAuthGuard extends AuthGuard('jwt') {
     }
     const token = authorization.replace('Bearer ', '');
 
+    console.log(token);
+
     this.jwtService.verify(token, { secret: 'SecretCode-4224' });
 
     return ctx.getContext().req;
