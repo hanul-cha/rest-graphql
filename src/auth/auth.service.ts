@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { User } from './auth.entity';
 import { AuthInput, AuthRole } from './dto/auth-role.dto';
 import { CreateAuthInput } from './dto/create-auth-credential.dto';
@@ -8,12 +7,16 @@ import * as bcrypt from 'bcryptjs';
 import { SignInAuthInput } from './dto/signIn-auth-credential.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ApolloError } from 'apollo-server-express';
+import { UserRepository } from './auth.repository';
+import { ContractRepository } from 'src/contract/contract.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(User)
-    private UserRepository: Repository<User>,
+    @InjectRepository(UserRepository)
+    private UserRepository: UserRepository,
+    @InjectRepository(ContractRepository)
+    private ContractRepository: ContractRepository,
     private jwtService: JwtService,
   ) {}
 
@@ -53,6 +56,12 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  async countContractByUserId(id: number): Promise<number> {
+    const ContractQb = this.ContractRepository.createQueryBuilder();
+    ContractQb.where('contract.user_id = :id', { id });
+    return await ContractQb.getCount();
   }
 
   async findAll(): Promise<User[]> {

@@ -1,12 +1,14 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './auth.entity';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../role/jwt.strategy';
+import { UserRepository } from './auth.repository';
+import { ContractRepository } from 'src/contract/contract.repository';
 
+@Global()
 @Module({
   imports: [
     PassportModule,
@@ -17,9 +19,9 @@ import { JwtStrategy } from '../role/jwt.strategy';
         expiresIn: 3600 * 10,
       },
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([UserRepository, ContractRepository]),
   ],
   providers: [AuthService, AuthResolver, JwtStrategy],
-  exports: [PassportModule],
+  exports: [PassportModule, AuthService],
 })
 export class AuthModule {}

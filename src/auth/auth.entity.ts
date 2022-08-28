@@ -32,6 +32,14 @@ export class User extends BaseEntity {
   name: string;
 
   @Field(() => GraphQLString, { nullable: true })
+  @Column({
+    type: String,
+    nullable: true,
+    default: null,
+  })
+  contents: string | null;
+
+  @Field(() => GraphQLString, { nullable: true })
   @Column({ type: String, default: null })
   address: string | null;
 

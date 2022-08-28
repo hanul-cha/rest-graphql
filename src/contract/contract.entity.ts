@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'contract' })
 @ObjectType()
 export class Contract extends BaseEntity {
   @PrimaryGeneratedColumn()

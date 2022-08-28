@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import { GqlAuthGuard } from './guard/auth.guard';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { PassportModule } from '@nestjs/passport';
+import { ContractModule } from './contract/contract.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { PassportModule } from '@nestjs/passport';
     MenuModule,
     AuthModule,
     PokemonModule,
+    ContractModule,
   ],
   controllers: [AppController],
   providers: [AppService, GqlAuthGuard],

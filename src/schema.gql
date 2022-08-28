@@ -21,11 +21,13 @@ type User {
   userId: String!
   password: String!
   name: String!
+  contents: String
   address: String
   sns: AuthSnsImpl
   questionForSearch: String!
   answerForSearch: String!
   createAt: Timestamp!
+  countContract: Int!
 }
 
 """
