@@ -1,5 +1,10 @@
 import { applyDecorators, UseGuards } from '@nestjs/common';
-import { Query, QueryOptions, ReturnTypeFuncValue } from '@nestjs/graphql';
+import {
+  Mutation,
+  Query,
+  QueryOptions,
+  ReturnTypeFuncValue,
+} from '@nestjs/graphql';
 import { AuthRole } from 'src/auth/dto/auth-role.dto';
 import { GqlAuthGuard } from 'src/guard/auth.guard';
 import { RolesGuard } from 'src/guard/role.guard';
@@ -17,6 +22,16 @@ export const GuardQuery = (option?: QueryOption) => {
     Authorize(option.roles ?? null),
     UseGuards(GqlAuthGuard, RolesGuard),
     Query(() => {
+      return option.return;
+    }, option.options),
+  );
+};
+
+export const GuardMutation = (option?: QueryOption) => {
+  return applyDecorators(
+    Authorize(option.roles ?? null),
+    UseGuards(GqlAuthGuard, RolesGuard),
+    Mutation(() => {
       return option.return;
     }, option.options),
   );

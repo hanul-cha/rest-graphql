@@ -6,8 +6,6 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { AuthRole } from './dto/auth-role.dto';
-import { AuthSearchQuestion } from './dto/auth-search.dto';
 
 @Entity()
 @Unique(['userId'])
@@ -66,7 +64,6 @@ export class User extends BaseEntity {
     name: 'update_at',
     readonly: true,
     default: () => 'CURRENT_TIMESTAMP',
-    onUpdate: 'CURRENT_TIMESTAMP',
   })
   updateAt: number;
 }
