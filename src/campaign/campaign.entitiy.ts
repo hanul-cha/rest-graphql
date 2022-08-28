@@ -1,4 +1,5 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { GraphQLInt, GraphQLString } from 'graphql';
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { CampaignType, GraphQLCampaignType } from './campaign.type';
 
@@ -9,15 +10,15 @@ export class Campaign extends BaseEntity {
   @Field(() => ID)
   id: number;
 
-  @Field(() => Int)
+  @Field(() => GraphQLInt)
   @Column({ type: Number, name: 'create_user_id' })
-  createUserId: string;
+  createUserId: number;
 
-  @Field(() => String)
+  @Field(() => GraphQLString)
   @Column({ type: String })
   title: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => GraphQLString, { nullable: true })
   @Column({
     type: String,
     nullable: true,
@@ -25,7 +26,7 @@ export class Campaign extends BaseEntity {
   })
   contents: string | null;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => GraphQLString, { nullable: true })
   @Column({
     type: 'timestamp',
     name: 'start_date',
@@ -34,7 +35,7 @@ export class Campaign extends BaseEntity {
   })
   startDate: string | null;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => GraphQLString, { nullable: true })
   @Column({
     type: 'timestamp',
     name: 'end_date',
@@ -43,7 +44,7 @@ export class Campaign extends BaseEntity {
   })
   endDate: string | null;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => GraphQLString, { nullable: true })
   @Column({
     type: 'timestamp',
     name: 'dead_line',
@@ -52,7 +53,7 @@ export class Campaign extends BaseEntity {
   })
   deadLine: string | null;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => GraphQLString, { nullable: true })
   @Column({
     type: String,
     name: 'open_link',
@@ -61,7 +62,7 @@ export class Campaign extends BaseEntity {
   })
   openLink: string | null;
 
-  @Field(() => Number, { nullable: true })
+  @Field(() => GraphQLInt, { nullable: true })
   @Column({
     type: Number,
     name: 'maximum_user_length',
@@ -70,13 +71,13 @@ export class Campaign extends BaseEntity {
   })
   maximumUserLength: number | null;
 
-  @Field(() => CampaignType)
+  @Field(() => GraphQLCampaignType)
   @Column({
     enum: CampaignType,
   })
   type: CampaignType;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => GraphQLString, { nullable: true })
   @Column({
     type: String,
     name: 'start_space',
@@ -85,7 +86,7 @@ export class Campaign extends BaseEntity {
   })
   startSpace: string | null;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => GraphQLString, { nullable: true })
   @Column({
     type: String,
     name: 'end_space',
@@ -94,7 +95,7 @@ export class Campaign extends BaseEntity {
   })
   endSpace: string | null;
 
-  @Field(() => Number)
+  @Field(() => GraphQLInt)
   @Column({
     type: Number,
     name: 'count_like',

@@ -1,4 +1,5 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, GraphQLTimestamp, ObjectType } from '@nestjs/graphql';
+import { GraphQLID, GraphQLString } from 'graphql';
 import {
   BaseEntity,
   Column,
@@ -6,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
+import { AuthSns, AuthSnsImpl } from './auth.type';
 import { AuthRole } from './dto/auth-role.dto';
 import { AuthSearchQuestion } from './dto/auth-search.dto';
 
@@ -14,24 +16,28 @@ import { AuthSearchQuestion } from './dto/auth-search.dto';
 @ObjectType()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
-  @Field(() => ID)
+  @Field(() => GraphQLID)
   id: number;
 
-  @Field(() => String)
+  @Field(() => GraphQLString)
   @Column({ type: String, name: 'user_id' })
   userId: string;
 
-  @Field(() => String)
+  @Field(() => GraphQLString)
   @Column({ type: String })
   password: string;
 
-  @Field(() => String)
+  @Field(() => GraphQLString)
   @Column({ type: String })
   name: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => GraphQLString, { nullable: true })
   @Column({ type: String, default: null })
-  address: string;
+  address: string | null;
+
+  @Field(() => AuthSnsImpl, { nullable: true })
+  @Column({ type: 'json', default: null })
+  sns: AuthSns[] | null;
 
   @Column({
     type: 'json',
@@ -39,20 +45,21 @@ export class User extends BaseEntity {
   })
   roles: AuthRole[] | null;
 
-  @Field(() => String)
+  @Field(() => GraphQLString)
   @Column({
     type: String,
     name: 'question_for_search',
   })
   questionForSearch: AuthSearchQuestion;
 
-  @Field(() => String)
+  @Field(() => GraphQLString)
   @Column({
     type: String,
     name: 'answer_for_search',
   })
   answerForSearch: string;
 
+  @Field(() => GraphQLTimestamp)
   @Column({
     type: 'timestamp',
     name: 'created_at',

@@ -1,55 +1,20 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  Unique,
-} from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-@Unique(['userId'])
 @ObjectType()
-export class User extends BaseEntity {
+export class Contract extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
   id: number;
 
-  @Field(() => String)
-  @Column({ type: String, name: 'user_id' })
-  userId: string;
+  @Field(() => Number)
+  @Column({ type: Number, name: 'user_id' })
+  userId: number;
 
-  @Field(() => String)
-  @Column({ type: String })
-  password: string;
-
-  @Field(() => String)
-  @Column({ type: String })
-  name: string;
-
-  @Field(() => String, { nullable: true })
-  @Column({ type: String, default: null })
-  address: string;
-
-  @Column({
-    type: 'json',
-    default: null,
-  })
-  roles: AuthRole[] | null;
-
-  @Field(() => String)
-  @Column({
-    type: String,
-    name: 'question_for_search',
-  })
-  questionForSearch: AuthSearchQuestion;
-
-  @Field(() => String)
-  @Column({
-    type: String,
-    name: 'answer_for_search',
-  })
-  answerForSearch: string;
+  @Field(() => Number)
+  @Column({ type: Number, name: 'campaign_id' })
+  campaignId: number;
 
   @Column({
     type: 'timestamp',
@@ -64,6 +29,7 @@ export class User extends BaseEntity {
     name: 'update_at',
     readonly: true,
     default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
   updateAt: number;
 }
