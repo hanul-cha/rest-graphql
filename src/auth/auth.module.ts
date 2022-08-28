@@ -1,12 +1,10 @@
 import { Global, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../role/jwt.strategy';
-import { UserRepository } from './auth.repository';
-import { ContractRepository } from 'src/contract/contract.repository';
+import { globalDynamicModule } from 'src/globalDynamicModule';
 
 @Global()
 @Module({
@@ -19,7 +17,7 @@ import { ContractRepository } from 'src/contract/contract.repository';
         expiresIn: 3600 * 10,
       },
     }),
-    TypeOrmModule.forFeature([UserRepository, ContractRepository]),
+    globalDynamicModule,
   ],
   providers: [AuthService, AuthResolver, JwtStrategy],
   exports: [PassportModule, AuthService],
