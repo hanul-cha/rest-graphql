@@ -1,4 +1,4 @@
-import { GraphQLEnumType } from 'graphql';
+import { GraphQLEnumType } from 'graphql'
 
 export enum CampaignType {
   Homecoming = 'HOMECOMING',
@@ -15,4 +15,4 @@ export const GraphQLCampaignType = new GraphQLEnumType({
       value: CampaignType.Playing,
     },
   },
-});
+})

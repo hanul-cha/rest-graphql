@@ -1,22 +1,22 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { GraphQLInt, GraphQLString } from 'graphql';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { CampaignType, GraphQLCampaignType } from './campaign.type';
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { GraphQLInt, GraphQLString } from 'graphql'
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { CampaignType, GraphQLCampaignType } from './campaign.type'
 
 @Entity()
 @ObjectType()
 export class Campaign extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
-  id: number;
+  id!: number
 
   @Field(() => GraphQLInt)
   @Column({ type: Number, name: 'create_user_id' })
-  createUserId: number;
+  userId!: number
 
   @Field(() => GraphQLString)
   @Column({ type: String })
-  title: string;
+  title!: string
 
   @Field(() => GraphQLString, { nullable: true })
   @Column({
@@ -24,7 +24,7 @@ export class Campaign extends BaseEntity {
     nullable: true,
     default: null,
   })
-  contents: string | null;
+  contents: string | null
 
   @Field(() => GraphQLString, { nullable: true })
   @Column({
@@ -33,7 +33,7 @@ export class Campaign extends BaseEntity {
     nullable: true,
     default: null,
   })
-  startDate: string | null;
+  startDate: string | null
 
   @Field(() => GraphQLString, { nullable: true })
   @Column({
@@ -42,7 +42,7 @@ export class Campaign extends BaseEntity {
     nullable: true,
     default: null,
   })
-  endDate: string | null;
+  endDate: string | null
 
   @Field(() => GraphQLString, { nullable: true })
   @Column({
@@ -51,7 +51,7 @@ export class Campaign extends BaseEntity {
     nullable: true,
     default: null,
   })
-  deadLine: string | null;
+  deadLine: string | null
 
   @Field(() => GraphQLString, { nullable: true })
   @Column({
@@ -60,7 +60,7 @@ export class Campaign extends BaseEntity {
     nullable: true,
     default: null,
   })
-  openLink: string | null;
+  openLink: string | null
 
   @Field(() => GraphQLInt, { nullable: true })
   @Column({
@@ -69,14 +69,14 @@ export class Campaign extends BaseEntity {
     nullable: true,
     default: null,
   })
-  maximumUserLength: number | null;
+  maximumUserLength: number | null
 
   @Field(() => GraphQLCampaignType)
   @Column({
     type: 'enum',
     enum: CampaignType,
   })
-  type: CampaignType;
+  type: CampaignType
 
   @Field(() => GraphQLString, { nullable: true })
   @Column({
@@ -85,7 +85,7 @@ export class Campaign extends BaseEntity {
     nullable: true,
     default: null,
   })
-  startSpace: string | null;
+  startSpace: string | null
 
   @Field(() => GraphQLString, { nullable: true })
   @Column({
@@ -94,7 +94,7 @@ export class Campaign extends BaseEntity {
     nullable: true,
     default: null,
   })
-  endSpace: string | null;
+  endSpace: string | null
 
   @Field(() => GraphQLInt)
   @Column({
@@ -102,7 +102,7 @@ export class Campaign extends BaseEntity {
     name: 'count_like',
     default: 0,
   })
-  countLike: number;
+  countLike: number
 
   @Column({
     type: 'timestamp',
@@ -110,7 +110,7 @@ export class Campaign extends BaseEntity {
     readonly: true,
     default: () => 'CURRENT_TIMESTAMP',
   })
-  createAt: number;
+  createAt: number
 
   @Column({
     type: 'timestamp',
@@ -119,5 +119,5 @@ export class Campaign extends BaseEntity {
     default: () => 'CURRENT_TIMESTAMP',
     onUpdate: 'CURRENT_TIMESTAMP',
   })
-  updateAt: number;
+  updateAt: number
 }

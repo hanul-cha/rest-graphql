@@ -1,8 +1,5 @@
-import { ArgsType, Field, InputType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { IsString, Matches, MaxLength, MinLength } from 'class-validator';
-import { GraphQLNonNull } from 'graphql';
-import { Column } from 'typeorm';
-import { AuthRole } from './auth-role.dto';
 import { AuthSearchQuestion } from './auth-search.dto';
 
 @InputType()

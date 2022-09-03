@@ -1,21 +1,12 @@
-import { UseGuards, ValidationPipe } from '@nestjs/common';
-import {
-  Args,
-  Int,
-  Mutation,
-  Parent,
-  Query,
-  ResolveField,
-  Resolver,
-} from '@nestjs/graphql';
-import { Authorize } from 'src/decorators/roles.decorator';
-import { RolesGuard } from '../guard/role.guard';
-import { GuardMutation, GuardQuery } from 'src/decorators/query.decorator';
-import { GraphQLInt } from 'graphql';
-import { Campaign } from './campaign.entity';
-import { AuthRole } from 'src/auth/dto/auth-role.dto';
-import { ContextUser, Ctx } from 'src/decorators/ctx.decorator';
-import { CampaignService } from './campaignservice';
+import { ValidationPipe } from '@nestjs/common'
+import { Args, Resolver } from '@nestjs/graphql'
+import { GuardMutation, GuardQuery } from 'src/decorators/query.decorator'
+import { Campaign } from './campaign.entity'
+import { AuthRole } from 'src/auth/dto/auth-role.dto'
+import { ContextUser, Ctx } from 'src/decorators/ctx.decorator'
+import { CampaignService } from './campaign.service'
+import { AddCampaignInput } from './dto/add-campaign.dto'
+import { GraphQLBoolean, GraphQLString } from 'graphql'
 
 @Resolver(() => Campaign)
 export class AuthResolver {
@@ -25,12 +16,28 @@ export class AuthResolver {
     roles: [AuthRole.ADMIN_GUEST, AuthRole.ADMIN_USER],
     return: Campaign,
   })
-  getUser(
-    @Args('id', { type: () => Int }) id: number,
+  async addCampaign(
+    @Args('addCampaignInput', ValidationPipe)
+    addCampaignInput: AddCampaignInput,
     @Ctx() user: ContextUser,
-  ) {
-    return this.CampaignService.addCampaign({
-      id: user.id,
-    });
+  ): Promise<Campaign> {
+    return await this.CampaignService.addCampaign({
+      userId: user.id,
+      ...addCampaignInput,
+    })
+  }
+
+  @GuardQuery({
+    roles: [AuthRole.ADMIN_GUEST, AuthRole.ADMIN_USER],
+    return: GraphQLBoolean,
+    options: {
+      name: 'sameTitleCampaign',
+    },
+  })
+  async checkSameTitleCampaign(
+    @Args('title', { type: () => GraphQLString })
+    title: string,
+  ): Promise<boolean> {
+    return await this.CampaignService.checkSameTitleCampaign(title)
   }
 }
