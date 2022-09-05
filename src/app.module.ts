@@ -13,6 +13,7 @@ import { GqlAuthGuard } from './guard/auth.guard';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { PassportModule } from '@nestjs/passport';
 import { ContractModule } from './contract/contract.module';
+import { CampaignModule } from './campaign/campaign.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ContractModule } from './contract/contract.module';
     AuthModule,
     PokemonModule,
     ContractModule,
+    CampaignModule,
   ],
   controllers: [AppController],
   providers: [AppService, GqlAuthGuard],

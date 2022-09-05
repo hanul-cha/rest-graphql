@@ -35,10 +35,26 @@ type User {
 """
 scalar Timestamp
 
+type Campaign {
+  id: ID!
+  userId: Int!
+  title: String!
+  contents: String
+  startDate: String
+  endDate: String
+  deadLine: String
+  openLink: String
+  maximumUserLength: Int
+  startSpace: String
+  endSpace: String
+  countLike: Int!
+}
+
 type Query {
   menu: [Menu!]!
   signIn(signInAuthInput: SignInAuthInput!): String!
   getUser(id: Int!): User!
+  sameTitleCampaign(title: String!): Boolean!
 }
 
 input SignInAuthInput {
@@ -50,6 +66,7 @@ type Mutation {
   createMenu(createMenuInput: CreateMenuInput!): Menu!
   addRoles(authInput: AuthInput!): User!
   createUser(createUserInput: CreateAuthInput!): User!
+  addCampaign(addCampaignInput: AddCampaignInput!): Campaign!
 }
 
 input CreateMenuInput {
@@ -72,4 +89,15 @@ input CreateAuthInput {
   questionForSearch: String!
   answerForSearch: String!
   address: String
+}
+
+input AddCampaignInput {
+  title: String!
+  contents: String
+  startDate: String
+  endDate: String
+  openLink: String
+  maximumUserLength: Float
+  startSpace: String
+  endSpace: String
 }

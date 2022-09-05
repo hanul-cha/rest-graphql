@@ -9,7 +9,7 @@ import { AddCampaignInput } from './dto/add-campaign.dto'
 import { GraphQLBoolean, GraphQLString } from 'graphql'
 
 @Resolver(() => Campaign)
-export class AuthResolver {
+export class CampaignResolver {
   constructor(private CampaignService: CampaignService) {}
 
   @GuardMutation({
@@ -35,8 +35,7 @@ export class AuthResolver {
     },
   })
   async checkSameTitleCampaign(
-    @Args('title', { type: () => GraphQLString })
-    title: string,
+    @Args('title', { type: () => GraphQLString }) title: string,
   ): Promise<boolean> {
     return await this.CampaignService.checkSameTitleCampaign(title)
   }

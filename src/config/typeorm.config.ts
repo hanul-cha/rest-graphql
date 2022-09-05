@@ -1,4 +1,4 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 
 export const typeORMConfig: TypeOrmModuleOptions = {
   type: 'mysql',
@@ -9,4 +9,4 @@ export const typeORMConfig: TypeOrmModuleOptions = {
   database: 'lunchbox',
   entities: ['dist/**/*.entity{.ts,.js}'],
   synchronize: true,
-};
+}

@@ -1,6 +1,6 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import { GraphQLEnumType, GraphQLObjectType } from 'graphql';
-import { GraphQLString } from 'graphql';
+import { Field, ObjectType } from '@nestjs/graphql'
+import { GraphQLEnumType, GraphQLObjectType } from 'graphql'
+import { GraphQLString } from 'graphql'
 
 export enum SnsType {
   Kakao = 'kakao',
@@ -21,11 +21,11 @@ export const GraphQLSnsType = new GraphQLEnumType({
       value: SnsType.Instagram,
     },
   },
-});
+})
 
 export interface AuthSns {
-  type: SnsType;
-  url: string;
+  type: SnsType
+  url: string
 }
 
 export const GraphQLAuthSns = new GraphQLObjectType({
@@ -34,13 +34,13 @@ export const GraphQLAuthSns = new GraphQLObjectType({
     type: { type: GraphQLSnsType },
     url: { type: GraphQLString },
   }),
-});
+})
 
 @ObjectType()
 export class AuthSnsImpl implements AuthSns {
   @Field()
-  type: SnsType;
+  type: SnsType
 
   @Field()
-  url: string;
+  url: string
 }
