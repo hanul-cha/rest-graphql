@@ -8,5 +8,10 @@ export const typeORMConfig: TypeOrmModuleOptions = {
   password: 'root',
   database: 'lunchbox',
   entities: ['dist/**/*.entity{.ts,.js}'],
-  synchronize: true,
+  synchronize: false,
+  migrationsTableName: '_migrations',
+  migrations: ['dist/migrations/**/*{.ts,.js}'],
+  cli: {
+    migrationsDir: 'src/migrations',
+  },
 }

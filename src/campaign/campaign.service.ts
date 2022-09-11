@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
 import { ApolloError } from 'apollo-server-express'
 import { scopeAndWhereSameText } from 'src/scope/scopeAndWhereSameText'
 import { Campaign } from './campaign.entity'
@@ -12,13 +11,10 @@ interface AddCampaignInputAndId extends AddCampaignInput {
 
 @Injectable()
 export class CampaignService {
-  constructor(
-    @InjectRepository(CampaignRepository)
-    private CampaignRepository: CampaignRepository,
-  ) {}
+  constructor(private campaignRepository: CampaignRepository) {}
 
   async addCampaign(input: AddCampaignInputAndId): Promise<Campaign> {
-    const repoCampaign = this.CampaignRepository
+    const repoCampaign = this.campaignRepository
     const countSameTitleCampaign = await repoCampaign
       .createQueryBuilder()
       .where(scopeAndWhereSameText(input.title, 'campaign.title'))
@@ -40,10 +36,10 @@ export class CampaignService {
   }
 
   async checkSameTitleCampaign(title: string): Promise<boolean> {
-    const countSameTitleCampaign =
-      await this.CampaignRepository.createQueryBuilder()
-        .where(scopeAndWhereSameText(title, 'campaign.title'))
-        .getCount()
+    const countSameTitleCampaign = await this.campaignRepository
+      .createQueryBuilder()
+      .where(scopeAndWhereSameText(title, 'campaign.title'))
+      .getCount()
 
     if (countSameTitleCampaign > 0) {
       return true

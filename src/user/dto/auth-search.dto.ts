@@ -1,4 +1,4 @@
-import { GraphQLEnumType } from 'graphql';
+import { GraphQLEnumType } from 'graphql'
 
 export enum AuthSearchQuestion {
   FAVORITE_PLACE = 'FAVORITE_PLACE',
@@ -37,4 +37,4 @@ export const GraphQLAuthSearchQuestion = new GraphQLEnumType({
       description: '제일 좋아하는 음식',
     },
   },
-});
+})

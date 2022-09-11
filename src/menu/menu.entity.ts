@@ -1,33 +1,33 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLString } from 'graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Field, Int, ObjectType } from '@nestjs/graphql'
+import { GraphQLID, GraphQLInt, GraphQLNonNull, GraphQLString } from 'graphql'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 @ObjectType()
 export class Menu {
   @PrimaryGeneratedColumn()
   @Field(() => Int)
-  id: number;
+  id: number
 
   @Field()
   @Column({ type: String })
-  title: string;
+  title: string
 
   @Column()
   @Field()
-  contents: string;
+  contents: string
 
   @Column()
   @Field()
-  img: string;
+  img: string
 
   @Column()
   @Field()
-  price: number;
+  price: number
 
   @Column()
   @Field()
-  menuType: string;
+  menuType: string
 
   @Column({
     type: 'timestamp',
@@ -35,7 +35,7 @@ export class Menu {
     readonly: true,
     default: () => 'CURRENT_TIMESTAMP',
   })
-  createAt: number;
+  createAt: number
 
   @Column({
     type: 'timestamp',
@@ -43,5 +43,5 @@ export class Menu {
     readonly: true,
     default: () => 'CURRENT_TIMESTAMP',
   })
-  updateAt: number;
+  updateAt: number
 }

@@ -74,7 +74,7 @@ export class Campaign extends BaseEntity {
   @Field(() => GraphQLCampaignType)
   @Column({
     type: 'enum',
-    enum: Object.values(CampaignType),
+    enum: CampaignType,
   })
   type: CampaignType
 

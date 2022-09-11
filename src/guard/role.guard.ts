@@ -1,15 +1,15 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { GqlExecutionContext } from '@nestjs/graphql';
-import { AuthRole } from 'src/auth/dto/auth-role.dto';
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common'
+import { Reflector } from '@nestjs/core'
+import { GqlExecutionContext } from '@nestjs/graphql'
+import { AuthRole } from 'src/user/dto/auth-role.dto'
 
 const matchRoles = (roles: AuthRole[], userRoles: AuthRole[]) => {
   return roles.some((role) =>
     userRoles.some(
       (userRole) => role === userRole || userRole === AuthRole.ADMIN_DEVELOPER,
     ),
-  );
-};
+  )
+}
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -19,14 +19,14 @@ export class RolesGuard implements CanActivate {
     const roles = this.reflector.get<AuthRole[] | null>(
       'roles',
       context.getHandler(),
-    );
-    const ctx = GqlExecutionContext.create(context);
-    const user = ctx.getContext().req.user;
+    )
+    const ctx = GqlExecutionContext.create(context)
+    const user = ctx.getContext().req.user
 
     if (!roles || roles.length === 0) {
-      return true;
+      return true
     }
 
-    return matchRoles(roles, user.roles);
+    return matchRoles(roles, user.roles)
   }
 }

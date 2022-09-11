@@ -1,11 +1,10 @@
-import { Global, Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Contract } from './contract.entity';
-import { ContractService } from './contract.service';
+import { Global, Module } from '@nestjs/common'
+import { globalDynamicModule } from 'src/globalDynamicModule'
+import { ContractService } from './contract.service'
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([Contract])],
+  imports: [globalDynamicModule],
   providers: [ContractService],
   exports: [ContractService],
 })

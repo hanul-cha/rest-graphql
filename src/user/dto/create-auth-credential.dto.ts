@@ -1,6 +1,6 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsString, Matches, MaxLength, MinLength } from 'class-validator';
-import { AuthSearchQuestion } from './auth-search.dto';
+import { Field, InputType } from '@nestjs/graphql'
+import { IsString, Matches, MaxLength, MinLength } from 'class-validator'
+import { AuthSearchQuestion } from './auth-search.dto'
 
 @InputType()
 export class CreateAuthInput {
@@ -8,7 +8,7 @@ export class CreateAuthInput {
   @IsString()
   @MinLength(4)
   @MaxLength(20)
-  userId!: string;
+  userId!: string
 
   @Field()
   @IsString()
@@ -17,30 +17,30 @@ export class CreateAuthInput {
   @Matches(/^[a-zA-z0-9]*$/, {
     message: 'password only accepts english and number',
   })
-  password!: string;
+  password!: string
 
   @Field()
   @IsString()
   @MinLength(1)
   @MaxLength(20)
-  name: string;
+  name: string
 
   @Field()
   @IsString()
-  questionForSearch: AuthSearchQuestion;
+  questionForSearch: AuthSearchQuestion
 
   @Field()
   @IsString()
   @MinLength(1)
   @MaxLength(20)
-  answerForSearch: string;
+  answerForSearch: string
 
   @Field({ nullable: true })
   //   @IsString()
   //   @MinLength(10)
   //   @MaxLength(30)
   //   @ValidateIf((object, value) => value !== null)
-  address?: string;
+  address?: string
 
   //   @Field(() => [AuthRole])
   //   @Column({ type: 'json' })

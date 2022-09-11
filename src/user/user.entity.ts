@@ -1,15 +1,15 @@
-import { Field, GraphQLTimestamp, ObjectType } from '@nestjs/graphql';
-import { GraphQLID, GraphQLString } from 'graphql';
+import { Field, GraphQLTimestamp, ObjectType } from '@nestjs/graphql'
+import { GraphQLID, GraphQLString } from 'graphql'
 import {
   BaseEntity,
   Column,
   Entity,
   PrimaryGeneratedColumn,
   Unique,
-} from 'typeorm';
-import { AuthSns, AuthSnsImpl } from './auth.type';
-import { AuthRole } from './dto/auth-role.dto';
-import { AuthSearchQuestion } from './dto/auth-search.dto';
+} from 'typeorm'
+import { AuthSns, AuthSnsImpl } from './user.type'
+import { AuthRole } from './dto/auth-role.dto'
+import { AuthSearchQuestion } from './dto/auth-search.dto'
 
 @Entity()
 @Unique(['userId'])
@@ -17,19 +17,19 @@ import { AuthSearchQuestion } from './dto/auth-search.dto';
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field(() => GraphQLID)
-  id: number;
+  id: number
 
   @Field(() => GraphQLString)
   @Column({ type: String, name: 'user_id' })
-  userId: string;
+  userId: string
 
   @Field(() => GraphQLString)
   @Column({ type: String })
-  password: string;
+  password: string
 
   @Field(() => GraphQLString)
   @Column({ type: String })
-  name: string;
+  name: string
 
   @Field(() => GraphQLString, { nullable: true })
   @Column({
@@ -37,35 +37,35 @@ export class User extends BaseEntity {
     nullable: true,
     default: null,
   })
-  contents: string | null;
+  contents: string | null
 
   @Field(() => GraphQLString, { nullable: true })
   @Column({ type: String, default: null })
-  address: string | null;
+  address: string | null
 
   @Field(() => AuthSnsImpl, { nullable: true })
   @Column({ type: 'json', default: null })
-  sns: AuthSns[] | null;
+  sns: AuthSns[] | null
 
   @Column({
     type: 'json',
     default: null,
   })
-  roles: AuthRole[] | null;
+  roles: AuthRole[] | null
 
   @Field(() => GraphQLString)
   @Column({
     type: String,
     name: 'question_for_search',
   })
-  questionForSearch: AuthSearchQuestion;
+  questionForSearch: AuthSearchQuestion
 
   @Field(() => GraphQLString)
   @Column({
     type: String,
     name: 'answer_for_search',
   })
-  answerForSearch: string;
+  answerForSearch: string
 
   @Field(() => GraphQLTimestamp)
   @Column({
@@ -74,7 +74,7 @@ export class User extends BaseEntity {
     readonly: true,
     default: () => 'CURRENT_TIMESTAMP',
   })
-  createAt: number;
+  createAt: number
 
   @Column({
     type: 'timestamp',
@@ -83,5 +83,5 @@ export class User extends BaseEntity {
     default: () => 'CURRENT_TIMESTAMP',
     onUpdate: 'CURRENT_TIMESTAMP',
   })
-  updateAt: number;
+  updateAt: number
 }

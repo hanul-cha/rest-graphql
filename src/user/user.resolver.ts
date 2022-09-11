@@ -9,9 +9,9 @@ import {
   Resolver,
 } from '@nestjs/graphql'
 import { Authorize } from 'src/decorators/roles.decorator'
-import { User } from './auth.entity'
+import { User } from './user.entity'
 import { GqlAuthGuard } from '../guard/auth.guard'
-import { AuthService } from './auth.service'
+import { AuthService } from './user.service'
 import { AuthInput, AuthRole } from './dto/auth-role.dto'
 import { CreateAuthInput } from './dto/create-auth-credential.dto'
 import { SignInAuthInput } from './dto/signIn-auth-credential.dto'
