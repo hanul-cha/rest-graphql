@@ -8,7 +8,7 @@ import { AppService } from './app.service'
 import { MenuModule } from './menu/menu.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { typeORMConfig } from './config/typeorm.config'
-import { AuthModule } from './user/user.module'
+import { UserModule } from './user/user.module'
 import { GqlAuthGuard } from './guard/auth.guard'
 import { PassportModule } from '@nestjs/passport'
 import { ContractModule } from './contract/contract.module'
@@ -32,7 +32,7 @@ import { globalDynamicModule } from './globalDynamicModule'
     TypeOrmModule.forRoot(typeORMConfig),
     globalDynamicModule,
     MenuModule,
-    AuthModule,
+    UserModule,
     ContractModule,
     CampaignModule,
   ],

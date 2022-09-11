@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common'
-import { AuthService } from './user.service'
-import { AuthResolver } from './user.resolver'
+import { UserService } from './user.service'
+import { UserResolver } from './user.resolver'
 import { PassportModule } from '@nestjs/passport'
 import { JwtModule } from '@nestjs/jwt'
 import { JwtStrategy } from '../role/jwt.strategy'
@@ -19,7 +19,7 @@ import { globalDynamicModule } from 'src/globalDynamicModule'
     }),
     globalDynamicModule,
   ],
-  providers: [AuthService, AuthResolver, JwtStrategy],
-  exports: [PassportModule, AuthService],
+  providers: [UserService, UserResolver, JwtStrategy],
+  exports: [PassportModule, UserService],
 })
-export class AuthModule {}
+export class UserModule {}

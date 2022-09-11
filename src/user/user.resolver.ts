@@ -11,7 +11,7 @@ import {
 import { Authorize } from 'src/decorators/roles.decorator'
 import { User } from './user.entity'
 import { GqlAuthGuard } from '../guard/auth.guard'
-import { AuthService } from './user.service'
+import { UserService } from './user.service'
 import { AuthInput, AuthRole } from './dto/auth-role.dto'
 import { CreateAuthInput } from './dto/create-auth-credential.dto'
 import { SignInAuthInput } from './dto/signIn-auth-credential.dto'
@@ -20,8 +20,8 @@ import { GuardQuery } from 'src/decorators/query.decorator'
 import { GraphQLInt } from 'graphql'
 
 @Resolver(() => User)
-export class AuthResolver {
-  constructor(private authService: AuthService) {}
+export class UserResolver {
+  constructor(private userService: UserService) {}
 
   @Query(() => {
     return String
@@ -29,7 +29,7 @@ export class AuthResolver {
   signIn(
     @Args('signInAuthInput', ValidationPipe) signInAuthInput: SignInAuthInput,
   ): Promise<string> {
-    return this.authService.signIn(signInAuthInput)
+    return this.userService.signIn(signInAuthInput)
   }
 
   @GuardQuery({
@@ -37,14 +37,14 @@ export class AuthResolver {
     return: User,
   })
   getUser(@Args('id', { type: () => Int }) id: number): Promise<User> {
-    return this.authService.getUser(id)
+    return this.userService.getUser(id)
   }
 
   @ResolveField(() => GraphQLInt, {
     name: 'countContract',
   })
   getCountContractByUserId(@Parent() user: User): Promise<number> {
-    return this.authService.countContractByUserId(user.id)
+    return this.userService.countContractByUserId(user.id)
   }
 
   @Authorize(AuthRole.ADMIN_DEVELOPER)
@@ -53,13 +53,13 @@ export class AuthResolver {
   addRoles(
     @Args('authInput', ValidationPipe) authInput: AuthInput,
   ): Promise<User> {
-    return this.authService.addRoles(authInput)
+    return this.userService.addRoles(authInput)
   }
 
   @Mutation(() => User)
   createUser(
     @Args('createUserInput', ValidationPipe) createUserInput: CreateAuthInput,
   ): Promise<User> {
-    return this.authService.createUser(createUserInput)
+    return this.userService.createUser(createUserInput)
   }
 }

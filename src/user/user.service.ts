@@ -8,9 +8,10 @@ import { JwtService } from '@nestjs/jwt'
 import { ApolloError } from 'apollo-server-express'
 import { ContractRepository } from 'src/contract/contract.repository'
 import { UserRepository } from './user.repository'
+import { InjectRepository } from '@nestjs/typeorm'
 
 @Injectable()
-export class AuthService {
+export class UserService {
   constructor(
     private userRepository: UserRepository,
     private contractRepository: ContractRepository,
