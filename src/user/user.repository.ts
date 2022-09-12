@@ -1,5 +1,5 @@
 import { getDataSourceToken } from '@nestjs/typeorm'
-import { SourceToken } from 'src/database/sourceToken'
+import { SourceToken } from 'src/sourceToken'
 import { DataSource, Repository } from 'typeorm'
 import { User } from './user.entity'
 
@@ -28,5 +28,6 @@ export const userProvider = [
   },
 ]
 
+//TODO
 // 추상화 해서 전체로 뿌릴수 있을듯하다 데코레이터로 받아서 루프 돌려 등록해 보자
 // 참고 링크: https://kscodebase.tistory.com/524

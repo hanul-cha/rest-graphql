@@ -30,7 +30,6 @@ import { CampaignModule } from './campaign/campaign.module'
     ContractModule,
     CampaignModule,
   ],
-  // controllers: [AppController],
   providers: [GqlAuthGuard],
 })
 export class AppModule {}

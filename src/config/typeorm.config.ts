@@ -1,7 +1,4 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
-import { User } from 'src/user/user.entity'
-import { UserRepository } from 'src/user/user.repository'
-import { BaseEntity } from 'typeorm'
 
 export const typeORMConfig: TypeOrmModuleOptions = {
   type: 'mysql',
@@ -19,3 +16,5 @@ export const typeORMConfig: TypeOrmModuleOptions = {
   //   migrationsDir: 'src/migrations',
   // },
 }
+
+//TODO: dir이 제거되었음 추가해줘서 migration테스트 해봐야함

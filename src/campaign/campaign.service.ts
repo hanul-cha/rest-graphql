@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { ApolloError } from 'apollo-server-express'
-import { SourceToken } from 'src/database/sourceToken'
 import { scopeAndWhereSameText } from 'src/scope/scopeAndWhereSameText'
+import { SourceToken } from 'src/sourceToken'
 import { Campaign } from './campaign.entity'
 import { CampaignRepository } from './campaign.repository'
 import { AddCampaignInput } from './dto/add-campaign.dto'

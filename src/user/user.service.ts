@@ -8,7 +8,7 @@ import { JwtService } from '@nestjs/jwt'
 import { ApolloError } from 'apollo-server-express'
 import { ContractRepository } from 'src/contract/contract.repository'
 import { UserRepository } from './user.repository'
-import { SourceToken } from 'src/database/sourceToken'
+import { SourceToken } from 'src/sourceToken'
 
 @Injectable()
 export class UserService {

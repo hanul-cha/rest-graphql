@@ -4,7 +4,6 @@ import { GraphQLEnumType } from 'graphql'
 export enum AuthRole {
   ADMIN_USER = 'admin::user', // 일반사용자
 
-  //admin
   ADMIN_GUEST = 'admin::guest',
   ADMIN_DEVELOPER = 'admin::developer', // 개발자 (전체권한)
 }
