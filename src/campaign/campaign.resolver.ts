@@ -28,6 +28,13 @@ export class CampaignResolver {
   }
 
   @GuardQuery({
+    return: Campaign,
+  })
+  async getAll(): Promise<Campaign[]> {
+    return await this.campaignService.getAll()
+  }
+
+  @GuardQuery({
     roles: [AuthRole.ADMIN_GUEST, AuthRole.ADMIN_USER],
     return: GraphQLBoolean,
     options: {

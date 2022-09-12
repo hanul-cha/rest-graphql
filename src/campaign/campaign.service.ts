@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { ApolloError } from 'apollo-server-express'
+import { SourceToken } from 'src/database/sourceToken'
 import { scopeAndWhereSameText } from 'src/scope/scopeAndWhereSameText'
 import { Campaign } from './campaign.entity'
 import { CampaignRepository } from './campaign.repository'
@@ -11,7 +12,10 @@ interface AddCampaignInputAndId extends AddCampaignInput {
 
 @Injectable()
 export class CampaignService {
-  constructor(private campaignRepository: CampaignRepository) {}
+  constructor(
+    @Inject(SourceToken.Campaign)
+    private campaignRepository: CampaignRepository,
+  ) {}
 
   async addCampaign(input: AddCampaignInputAndId): Promise<Campaign> {
     const repoCampaign = this.campaignRepository
@@ -33,6 +37,10 @@ export class CampaignService {
     }
 
     return campaign
+  }
+
+  async getAll() {
+    return await this.campaignRepository.find()
   }
 
   async checkSameTitleCampaign(title: string): Promise<boolean> {

@@ -30,7 +30,7 @@ export class AddCampaignInput {
   @IsInt()
   maximumUserLength: number | null
 
-  @Field(() => GraphQLCampaignType)
+  @Field(() => CampaignType)
   @IsEnum(CampaignType)
   type: CampaignType
 

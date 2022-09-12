@@ -3,9 +3,6 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { join } from 'path'
 import { ApolloDriver } from '@nestjs/apollo'
 
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
-import { MenuModule } from './menu/menu.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { typeORMConfig } from './config/typeorm.config'
 import { UserModule } from './user/user.module'
@@ -13,7 +10,6 @@ import { GqlAuthGuard } from './guard/auth.guard'
 import { PassportModule } from '@nestjs/passport'
 import { ContractModule } from './contract/contract.module'
 import { CampaignModule } from './campaign/campaign.module'
-import { globalDynamicModule } from './globalDynamicModule'
 
 @Module({
   imports: [
@@ -30,13 +26,11 @@ import { globalDynamicModule } from './globalDynamicModule'
       },
     }),
     TypeOrmModule.forRoot(typeORMConfig),
-    globalDynamicModule,
-    MenuModule,
     UserModule,
     ContractModule,
     CampaignModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, GqlAuthGuard],
+  // controllers: [AppController],
+  providers: [GqlAuthGuard],
 })
 export class AppModule {}

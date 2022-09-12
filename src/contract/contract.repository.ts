@@ -1,5 +1,29 @@
-import { EntityRepository, Repository } from 'typeorm';
-import { Contract } from './contract.entity';
+import { getDataSourceToken } from '@nestjs/typeorm'
+import { SourceToken } from 'src/database/sourceToken'
+import { DataSource, Repository } from 'typeorm'
+import { Contract } from './contract.entity'
 
-@EntityRepository(Contract)
-export class ContractRepository extends Repository<Contract> {}
+export class ContractRepository extends Repository<Contract> {
+  testWithUser() {
+    return this.find({
+      where: {
+        id: 1,
+      },
+    })
+  }
+}
+
+export const contractProvider = [
+  {
+    provide: SourceToken.Contract,
+    useFactory: (dataSource: DataSource) => {
+      const repository = dataSource.getRepository(Contract)
+      return new ContractRepository(
+        repository.target,
+        repository.manager,
+        repository.queryRunner,
+      )
+    },
+    inject: [getDataSourceToken()],
+  },
+]

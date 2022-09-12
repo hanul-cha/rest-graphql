@@ -2,15 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Menu {
-  id: Int!
-  title: String!
-  contents: String!
-  img: String!
-  price: Float!
-  menuType: String!
-}
-
 type AuthSnsImpl {
   type: String!
   url: String!
@@ -45,15 +36,21 @@ type Campaign {
   deadLine: String
   openLink: String
   maximumUserLength: Int
+  type: CampaignType!
   startSpace: String
   endSpace: String
   countLike: Int!
 }
 
+enum CampaignType {
+  Homecoming
+  Playing
+}
+
 type Query {
-  menu: [Menu!]!
   signIn(signInAuthInput: SignInAuthInput!): String!
   getUser(id: Int!): User!
+  getAll: Campaign!
   sameTitleCampaign(title: String!): Boolean!
 }
 
@@ -63,18 +60,9 @@ input SignInAuthInput {
 }
 
 type Mutation {
-  createMenu(createMenuInput: CreateMenuInput!): Menu!
   addRoles(authInput: AuthInput!): User!
   createUser(createUserInput: CreateAuthInput!): User!
   addCampaign(addCampaignInput: AddCampaignInput!): Campaign!
-}
-
-input CreateMenuInput {
-  title: String!
-  contents: String!
-  img: String!
-  price: Float!
-  menuType: String!
 }
 
 input AuthInput {
@@ -98,6 +86,7 @@ input AddCampaignInput {
   endDate: String
   openLink: String
   maximumUserLength: Float
+  type: CampaignType!
   startSpace: String
   endSpace: String
 }

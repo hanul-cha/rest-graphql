@@ -1,20 +1,20 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity({ name: 'contract' })
 @ObjectType()
 export class Contract extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
-  id: number;
+  id: number
 
   @Field(() => Number)
   @Column({ type: Number, name: 'user_id' })
-  userId: number;
+  userId: number
 
   @Field(() => Number)
   @Column({ type: Number, name: 'campaign_id' })
-  campaignId: number;
+  campaignId: number
 
   @Column({
     type: 'timestamp',
@@ -22,7 +22,7 @@ export class Contract extends BaseEntity {
     readonly: true,
     default: () => 'CURRENT_TIMESTAMP',
   })
-  createAt: number;
+  createAt: number
 
   @Column({
     type: 'timestamp',
@@ -31,5 +31,5 @@ export class Contract extends BaseEntity {
     default: () => 'CURRENT_TIMESTAMP',
     onUpdate: 'CURRENT_TIMESTAMP',
   })
-  updateAt: number;
+  updateAt: number
 }

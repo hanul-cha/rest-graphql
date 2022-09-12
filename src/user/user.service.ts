@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { User } from './user.entity'
 import { AuthInput, AuthRole } from './dto/auth-role.dto'
 import { CreateAuthInput } from './dto/create-auth-credential.dto'
@@ -8,18 +8,24 @@ import { JwtService } from '@nestjs/jwt'
 import { ApolloError } from 'apollo-server-express'
 import { ContractRepository } from 'src/contract/contract.repository'
 import { UserRepository } from './user.repository'
-import { InjectRepository } from '@nestjs/typeorm'
+import { SourceToken } from 'src/database/sourceToken'
 
 @Injectable()
 export class UserService {
   constructor(
+    @Inject(SourceToken.User)
     private userRepository: UserRepository,
+    @Inject(SourceToken.Contract)
     private contractRepository: ContractRepository,
     private jwtService: JwtService,
   ) {}
 
   async getUser(id: number): Promise<User> {
-    return this.userRepository.findOne(id)
+    return this.userRepository.findOne({
+      where: {
+        id,
+      },
+    })
   }
 
   async createUser(input: CreateAuthInput): Promise<User> {
@@ -57,7 +63,9 @@ export class UserService {
 
   async addRoles(authInput: AuthInput): Promise<User> {
     const user = await this.userRepository.findOne({
-      userId: authInput.userId,
+      where: {
+        userId: authInput.userId,
+      },
     })
     user.roles.map((role) => {
       if (role === authInput.roles) {
@@ -70,7 +78,12 @@ export class UserService {
 
   async signIn(signInAuthInput: SignInAuthInput): Promise<string> {
     const { userId, password } = signInAuthInput
-    const user = await this.userRepository.findOne({ userId })
+    console.log('asdf', await this.userRepository.testWithUser())
+    const user = await this.userRepository.findOne({
+      where: {
+        userId: userId,
+      },
+    })
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload = { id: user.id, roles: user.roles, name: user.name }

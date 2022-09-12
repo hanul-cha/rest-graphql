@@ -12,12 +12,12 @@ import { Authorize } from 'src/decorators/roles.decorator'
 import { User } from './user.entity'
 import { GqlAuthGuard } from '../guard/auth.guard'
 import { UserService } from './user.service'
-import { AuthInput, AuthRole } from './dto/auth-role.dto'
 import { CreateAuthInput } from './dto/create-auth-credential.dto'
 import { SignInAuthInput } from './dto/signIn-auth-credential.dto'
 import { RolesGuard } from '../guard/role.guard'
 import { GuardQuery } from 'src/decorators/query.decorator'
 import { GraphQLInt } from 'graphql'
+import { AuthInput, AuthRole } from './dto/auth-role.dto'
 
 @Resolver(() => User)
 export class UserResolver {

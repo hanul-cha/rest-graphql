@@ -1,29 +1,29 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
-import { GqlExecutionContext } from '@nestjs/graphql';
-import { JwtService } from '@nestjs/jwt';
-import { AuthGuard } from '@nestjs/passport';
-import { ApolloError } from 'apollo-server-express';
+import { ExecutionContext, Injectable } from '@nestjs/common'
+import { GqlExecutionContext } from '@nestjs/graphql'
+import { JwtService } from '@nestjs/jwt'
+import { AuthGuard } from '@nestjs/passport'
+import { ApolloError } from 'apollo-server-express'
 
 @Injectable()
 export class GqlAuthGuard extends AuthGuard('jwt') {
   constructor(private jwtService: JwtService) {
-    super();
+    super()
   }
 
   getRequest(context: ExecutionContext) {
-    const ctx = GqlExecutionContext.create(context);
-    const authorization = ctx.getContext().req.headers.authorization;
+    const ctx = GqlExecutionContext.create(context)
+    const authorization = ctx.getContext().req.headers.authorization
 
     if (!authorization) {
-      throw new ApolloError('Token 전송 안됨', 'UNAUTHORIZED');
+      throw new ApolloError('Token 전송 안됨', 'UNAUTHORIZED')
     }
-    const token = authorization.replace('Bearer ', '');
+    const token = authorization.replace('Bearer ', '')
 
-    console.log(token);
+    console.log(token)
 
-    this.jwtService.verify(token, { secret: 'SecretCode-4224' });
+    this.jwtService.verify(token, { secret: 'SecretCode-4224' })
 
-    return ctx.getContext().req;
+    return ctx.getContext().req
   }
 
   //getRequest, canActivate

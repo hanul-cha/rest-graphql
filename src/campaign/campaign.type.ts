@@ -1,3 +1,4 @@
+import { registerEnumType } from '@nestjs/graphql'
 import { GraphQLEnumType } from 'graphql'
 
 export enum CampaignType {
@@ -16,3 +17,5 @@ export const GraphQLCampaignType = new GraphQLEnumType({
     },
   },
 })
+
+registerEnumType(CampaignType, { name: 'CampaignType' })

@@ -4,7 +4,8 @@ import { UserResolver } from './user.resolver'
 import { PassportModule } from '@nestjs/passport'
 import { JwtModule } from '@nestjs/jwt'
 import { JwtStrategy } from '../role/jwt.strategy'
-import { globalDynamicModule } from 'src/globalDynamicModule'
+import { userProvider } from './user.repository'
+import { contractProvider } from 'src/contract/contract.repository'
 
 @Global()
 @Module({
@@ -17,9 +18,14 @@ import { globalDynamicModule } from 'src/globalDynamicModule'
         expiresIn: 3600 * 10,
       },
     }),
-    globalDynamicModule,
   ],
-  providers: [UserService, UserResolver, JwtStrategy],
+  providers: [
+    UserService,
+    UserResolver,
+    JwtStrategy,
+    ...userProvider,
+    ...contractProvider,
+  ],
   exports: [PassportModule, UserService],
 })
 export class UserModule {}

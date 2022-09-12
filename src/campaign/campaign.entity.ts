@@ -71,12 +71,12 @@ export class Campaign extends BaseEntity {
   })
   maximumUserLength: number | null
 
-  @Field(() => GraphQLCampaignType)
+  @Field(() => CampaignType)
   @Column({
     type: 'enum',
     enum: CampaignType,
   })
-  type: CampaignType
+  type!: CampaignType
 
   @Field(() => GraphQLString, { nullable: true })
   @Column({
