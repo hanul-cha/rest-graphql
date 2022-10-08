@@ -7,8 +7,8 @@ export interface PageInfo {
 }
 
 export interface PageOption {
-  skip?: number
-  jump?: number
+  perPage?: number
+  page?: number
   after?: string | null
   order?: { column: string; asc: boolean }
 }
@@ -24,13 +24,28 @@ export async function paginate<TEntity>(
   option: PageOption,
 ): Promise<Paginate<TEntity>> {
   const totalCount = await qb.clone().getCount()
+
+  const perPage = Math.min(option.perPage ?? 20, 100)
+  const page = Math.min(option.page ?? 20, 100)
   const nodeQuery = qb.clone()
 
-  const test = option.order?.column
+  const nodes = await nodeQuery
+    .take(perPage)
+    .skip(perPage * (page - 1))
+    .getMany()
+
+  const nextPageLength = await nodeQuery
+    .take(1)
+    .skip(perPage * page)
+    .getCount()
 
   return {
     totalCount,
-    nodes: null,
-    pageInfo: 123,
+    nodes,
+    pageInfo: {
+      hasNextPage: nextPageLength > 0,
+      startPath: '',
+      endPath: '',
+    },
   }
 }
