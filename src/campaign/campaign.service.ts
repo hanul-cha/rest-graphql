@@ -6,10 +6,6 @@ import { Campaign } from './campaign.entity'
 import { CampaignRepository } from './campaign.repository'
 import { AddCampaignInput } from './dto/add-campaign.dto'
 
-interface AddCampaignInputAndId extends AddCampaignInput {
-  userId: number
-}
-
 @Injectable()
 export class CampaignService {
   constructor(
@@ -17,7 +13,11 @@ export class CampaignService {
     private campaignRepository: CampaignRepository,
   ) {}
 
-  async addCampaign(input: AddCampaignInputAndId): Promise<Campaign> {
+  async addCampaign(
+    input: AddCampaignInput & {
+      userId: number
+    },
+  ): Promise<Campaign> {
     const repoCampaign = this.campaignRepository
     const countSameTitleCampaign = await repoCampaign
       .createQueryBuilder()

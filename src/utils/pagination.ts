@@ -26,7 +26,7 @@ export async function paginate<TEntity>(
   const totalCount = await qb.clone().getCount()
 
   const perPage = Math.min(option.perPage ?? 20, 100)
-  const page = Math.min(option.page ?? 20, 100)
+  const page = Math.min(option.page ?? 1)
   const nodeQuery = qb.clone()
 
   const nodes = await nodeQuery

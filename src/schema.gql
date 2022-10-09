@@ -85,7 +85,7 @@ input AddCampaignInput {
   startDate: String
   endDate: String
   openLink: String
-  maximumUserLength: Float
+  maximumUserLength: Int
   type: CampaignType!
   startSpace: String
   endSpace: String

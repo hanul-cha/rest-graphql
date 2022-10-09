@@ -21,11 +21,15 @@ export class UserService {
   ) {}
 
   async getUser(id: number): Promise<User> {
-    return this.userRepository.findOne({
+    const user = await this.userRepository.findOne({
       where: {
         id,
       },
     })
+    if (!user) {
+      throw new ApolloError('아이디 또는 패스워드를 확인해 주세요')
+    }
+    return user
   }
 
   async createUser(input: CreateAuthInput): Promise<User> {
@@ -67,12 +71,19 @@ export class UserService {
         userId: authInput.userId,
       },
     })
-    user.roles.map((role) => {
-      if (role === authInput.roles) {
-        throw new ApolloError('This role has already been added')
-      }
-    })
-    user.roles.push(authInput.roles)
+    if (!user) {
+      throw new ApolloError('존제하지 않는 계정입니다.')
+    }
+    if (user.roles) {
+      user.roles.map((role) => {
+        if (role === authInput.roles) {
+          throw new ApolloError('This role has already been added')
+        }
+      })
+      user.roles.push(authInput.roles)
+    } else {
+      user.roles = [authInput.roles]
+    }
     return this.userRepository.save(user)
   }
 

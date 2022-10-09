@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { GraphQLInt, GraphQLString } from 'graphql'
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
-import { CampaignType, GraphQLCampaignType } from './campaign.type'
+import { CampaignType } from './campaign.type'
 
 @Entity()
 @ObjectType()
