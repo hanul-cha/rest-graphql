@@ -1,6 +1,6 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm'
+import { DataSource, DataSourceOptions } from 'typeorm'
 
-export const typeORMConfig: TypeOrmModuleOptions = {
+const options: DataSourceOptions = {
   type: 'mysql',
   host: 'localhost',
   port: 3306,
@@ -13,4 +13,6 @@ export const typeORMConfig: TypeOrmModuleOptions = {
   migrations: ['migrations/**/*{.ts,.js}'],
 }
 
-//TODO: dir이 제거되었음 추가해줘서 migration테스트 해봐야함
+const AppDataSource = new DataSource(options)
+
+export default AppDataSource

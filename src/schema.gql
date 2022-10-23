@@ -36,15 +36,9 @@ type Campaign {
   deadLine: String
   openLink: String
   maximumUserLength: Int
-  type: CampaignType!
   startSpace: String
   endSpace: String
   countLike: Int!
-}
-
-enum CampaignType {
-  Homecoming
-  Playing
 }
 
 type Query {
@@ -89,4 +83,9 @@ input AddCampaignInput {
   type: CampaignType!
   startSpace: String
   endSpace: String
+}
+
+enum CampaignType {
+  Homecoming
+  Playing
 }

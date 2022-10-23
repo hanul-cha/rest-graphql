@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { ContractState, GraphQLContractState } from './contract.type'
 
 @Entity({ name: 'contract' })
 @ObjectType()
@@ -15,6 +16,10 @@ export class Contract extends BaseEntity {
   @Field(() => Number)
   @Column({ type: Number, name: 'campaign_id' })
   campaignId: number
+
+  @Field(() => GraphQLContractState)
+  @Column({ type: String })
+  state: ContractState
 
   @Column({
     type: 'timestamp',

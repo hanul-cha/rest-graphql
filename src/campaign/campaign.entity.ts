@@ -1,7 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { GraphQLInt, GraphQLString } from 'graphql'
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
-import { CampaignType } from './campaign.type'
 
 @Entity()
 @ObjectType()
@@ -70,13 +69,6 @@ export class Campaign extends BaseEntity {
     default: null,
   })
   maximumUserLength: number | null
-
-  @Field(() => CampaignType)
-  @Column({
-    type: 'enum',
-    enum: CampaignType,
-  })
-  type!: CampaignType
 
   @Field(() => GraphQLString, { nullable: true })
   @Column({

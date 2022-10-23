@@ -39,7 +39,7 @@ export class AddCampaignInput {
   openLink: string | null
 
   @Field(() => GraphQLInt, { nullable: true })
-  @IsString()
+  @IsInt()
   @ValidateIf((_, value) => value !== null)
   maximumUserLength: number | null
 
