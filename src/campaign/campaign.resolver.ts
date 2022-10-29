@@ -1,18 +1,18 @@
 import { ValidationPipe } from '@nestjs/common'
 import { Args, Resolver } from '@nestjs/graphql'
-import { GuardMutation, GuardQuery } from 'src/decorators/query.decorator'
 import { Campaign } from './campaign.entity'
-import { AuthRole } from 'src/user/dto/auth-role.dto'
 import { ContextUser, Ctx } from 'src/decorators/ctx.decorator'
 import { CampaignService } from './campaign.service'
 import { AddCampaignInput } from './dto/add-campaign.dto'
 import { GraphQLBoolean, GraphQLString } from 'graphql'
+import { Mutation, Query } from 'src/decorators/query.decorator'
+import { AuthRole } from 'src/user/dto/auth-role.dto'
 
 @Resolver(() => Campaign)
 export class CampaignResolver {
   constructor(private campaignService: CampaignService) {}
 
-  @GuardMutation({
+  @Mutation({
     roles: [AuthRole.ADMIN_GUEST, AuthRole.ADMIN_USER],
     return: Campaign,
   })
@@ -27,14 +27,14 @@ export class CampaignResolver {
     })
   }
 
-  @GuardQuery({
+  @Query({
     return: Campaign,
   })
   async getAll(): Promise<Campaign[]> {
     return await this.campaignService.getAll()
   }
 
-  @GuardQuery({
+  @Query({
     roles: [AuthRole.ADMIN_GUEST, AuthRole.ADMIN_USER],
     return: GraphQLBoolean,
     options: {

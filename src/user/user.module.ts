@@ -1,10 +1,10 @@
 import { Global, Module } from '@nestjs/common'
-import { UserService } from './user.service'
 import { UserResolver } from './user.resolver'
 import { PassportModule } from '@nestjs/passport'
 import { JwtModule } from '@nestjs/jwt'
 import { JwtStrategy } from '../role/jwt.strategy'
 import { userProvider } from './user.repository'
+import { UserService } from './user.service'
 import { contractProvider } from 'src/contract/contract.repository'
 
 @Global()

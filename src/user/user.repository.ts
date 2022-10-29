@@ -1,7 +1,7 @@
-import { getDataSourceToken } from '@nestjs/typeorm'
-import { SourceToken } from 'src/sourceToken'
-import { DataSource, Repository } from 'typeorm'
 import { User } from './user.entity'
+import { getDataSourceToken } from '@nestjs/typeorm'
+import { SourceToken } from 'src/utils/sourceToken'
+import { DataSource, Repository } from 'typeorm'
 
 export class UserRepository extends Repository<User> {
   testWithUser() {

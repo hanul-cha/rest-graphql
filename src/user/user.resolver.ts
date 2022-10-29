@@ -2,28 +2,28 @@ import { UseGuards, ValidationPipe } from '@nestjs/common'
 import {
   Args,
   Int,
-  Mutation,
+  Mutation as normalMutation,
   Parent,
-  Query,
+  Query as normalQuery,
   ResolveField,
   Resolver,
 } from '@nestjs/graphql'
-import { Authorize } from 'src/decorators/roles.decorator'
-import { User } from './user.entity'
-import { GqlAuthGuard } from '../guard/auth.guard'
 import { UserService } from './user.service'
 import { CreateAuthInput } from './dto/create-auth-credential.dto'
 import { SignInAuthInput } from './dto/signIn-auth-credential.dto'
 import { RolesGuard } from '../guard/role.guard'
-import { GuardQuery } from 'src/decorators/query.decorator'
 import { GraphQLInt } from 'graphql'
 import { AuthInput, AuthRole } from './dto/auth-role.dto'
+import { Query } from 'src/decorators/query.decorator'
+import { Authorize } from 'src/decorators/roles.decorator'
+import { GqlAuthGuard } from 'src/guard/auth.guard'
+import { User } from './user.entity'
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(private userService: UserService) {}
 
-  @Query(() => {
+  @normalQuery(() => {
     return String
   })
   signIn(
@@ -32,7 +32,7 @@ export class UserResolver {
     return this.userService.signIn(signInAuthInput)
   }
 
-  @GuardQuery({
+  @Query({
     roles: [AuthRole.ADMIN_GUEST, AuthRole.ADMIN_USER],
     return: User,
   })
@@ -49,14 +49,14 @@ export class UserResolver {
 
   @Authorize(AuthRole.ADMIN_DEVELOPER)
   @UseGuards(GqlAuthGuard, RolesGuard)
-  @Mutation(() => User)
+  @normalMutation(() => User)
   addRoles(
     @Args('authInput', ValidationPipe) authInput: AuthInput,
   ): Promise<User> {
     return this.userService.addRoles(authInput)
   }
 
-  @Mutation(() => User)
+  @normalMutation(() => User)
   createUser(
     @Args('createUserInput', ValidationPipe) createUserInput: CreateAuthInput,
   ): Promise<User> {

@@ -6,10 +6,10 @@ import { ApolloDriver } from '@nestjs/apollo'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { typeORMConfig } from './config/typeorm.config'
 import { UserModule } from './user/user.module'
-import { GqlAuthGuard } from './guard/auth.guard'
 import { PassportModule } from '@nestjs/passport'
 import { ContractModule } from './contract/contract.module'
 import { CampaignModule } from './campaign/campaign.module'
+import { GqlAuthGuard } from './guard/auth.guard'
 
 @Module({
   imports: [

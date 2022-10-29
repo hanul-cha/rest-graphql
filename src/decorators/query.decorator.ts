@@ -1,14 +1,14 @@
 import { applyDecorators, UseGuards } from '@nestjs/common'
 import {
-  Mutation,
-  Query,
+  Mutation as normalMutation,
+  Query as normalQuery,
   QueryOptions,
   ReturnTypeFuncValue,
 } from '@nestjs/graphql'
-import { AuthRole } from 'src/user/dto/auth-role.dto'
-import { GqlAuthGuard } from 'src/guard/auth.guard'
 import { RolesGuard } from 'src/guard/role.guard'
 import { Authorize } from './roles.decorator'
+import { GqlAuthGuard } from 'src/guard/auth.guard'
+import { AuthRole } from 'src/user/dto/auth-role.dto'
 
 interface QueryOption {
   roles?: AuthRole | AuthRole[]
@@ -17,41 +17,41 @@ interface QueryOption {
 }
 
 // GqlAuthGuard 가드는 홀로 사용 가능하지만 RolesGuard는 req.user를 넘겨주는 가드와 사용가능합니다.
-export const GuardQuery = (option?: QueryOption) => {
-  const query = () => {
+export const Query = (option?: QueryOption) => {
+  const optionsQuery = () => {
     if (option) {
       if (option.return) {
         const returnOption = option.return
-        return Query(() => {
+        return normalQuery(() => {
           return returnOption
         }, option.options)
       }
     }
-    return Query()
+    return normalQuery()
   }
 
   return applyDecorators(
     Authorize(option?.roles ?? null),
     UseGuards(GqlAuthGuard, RolesGuard),
-    query(),
+    optionsQuery(),
   )
 }
 
-export const GuardMutation = (option?: QueryOption) => {
-  const mutation = () => {
+export const Mutation = (option?: QueryOption) => {
+  const optionsMutation = () => {
     if (option) {
       if (option.return) {
         const returnOption = option.return
-        return Mutation(() => {
+        return normalMutation(() => {
           return returnOption
         }, option.options)
       }
     }
-    return Mutation()
+    return normalMutation()
   }
   return applyDecorators(
     Authorize(option?.roles ?? null),
     UseGuards(GqlAuthGuard, RolesGuard),
-    mutation(),
+    optionsMutation(),
   )
 }

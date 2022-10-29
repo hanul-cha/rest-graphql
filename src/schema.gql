@@ -80,12 +80,6 @@ input AddCampaignInput {
   endDate: String
   openLink: String
   maximumUserLength: Int
-  type: CampaignType!
   startSpace: String
   endSpace: String
-}
-
-enum CampaignType {
-  Homecoming
-  Playing
 }

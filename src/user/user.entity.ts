@@ -8,8 +8,8 @@ import {
   Unique,
 } from 'typeorm'
 import { AuthSns, AuthSnsImpl } from './user.type'
-import { AuthSearchQuestion } from './dto/auth-search.dto'
 import { AuthRole } from './dto/auth-role.dto'
+import { AuthSearchQuestion } from './dto/auth-search.dto'
 
 @Entity()
 @Unique(['userId'])

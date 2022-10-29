@@ -1,5 +1,5 @@
 import { getDataSourceToken } from '@nestjs/typeorm'
-import { SourceToken } from 'src/sourceToken'
+import { SourceToken } from 'src/utils/sourceToken'
 import { DataSource, Repository } from 'typeorm'
 import { Contract } from './contract.entity'
 

@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common'
-import { User } from './user.entity'
-import { AuthInput, AuthRole } from './dto/auth-role.dto'
 import { CreateAuthInput } from './dto/create-auth-credential.dto'
 import * as bcrypt from 'bcryptjs'
+import { SourceToken } from 'src/utils/sourceToken'
 import { SignInAuthInput } from './dto/signIn-auth-credential.dto'
 import { JwtService } from '@nestjs/jwt'
 import { ApolloError } from 'apollo-server-express'
-import { ContractRepository } from 'src/contract/contract.repository'
 import { UserRepository } from './user.repository'
-import { SourceToken } from 'src/sourceToken'
+import { AuthInput, AuthRole } from './dto/auth-role.dto'
+import { User } from './user.entity'
+import { ContractRepository } from 'src/contract/contract.repository'
 
 @Injectable()
 export class UserService {
@@ -89,7 +89,6 @@ export class UserService {
 
   async signIn(signInAuthInput: SignInAuthInput): Promise<string> {
     const { userId, password } = signInAuthInput
-    console.log('asdf', await this.userRepository.testWithUser())
     const user = await this.userRepository.findOne({
       where: {
         userId: userId,

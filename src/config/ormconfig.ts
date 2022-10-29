@@ -7,7 +7,7 @@ const options: DataSourceOptions = {
   username: 'root',
   password: 'root',
   database: 'lunchbox',
-  entities: ['dist/**/*.entity.{ts,js}', 'dist/**/*.repository.{ts,js}'],
+  entities: ['dist/**/*.entity.js'],
   synchronize: false,
   migrationsTableName: '_migrations',
   migrations: ['migrations/**/*{.ts,.js}'],

@@ -8,7 +8,6 @@ import {
   ValidateIf,
 } from 'class-validator'
 import { GraphQLInt, GraphQLString } from 'graphql'
-import { CampaignType } from '../campaign.type'
 
 @InputType()
 export class AddCampaignInput {
@@ -42,10 +41,6 @@ export class AddCampaignInput {
   @IsInt()
   @ValidateIf((_, value) => value !== null)
   maximumUserLength: number | null
-
-  @Field(() => CampaignType)
-  @IsEnum(CampaignType)
-  type: CampaignType
 
   @Field(() => GraphQLString, { nullable: true })
   @IsString()
