@@ -18,6 +18,7 @@ import { Query } from 'src/decorators/query.decorator'
 import { Authorize } from 'src/decorators/roles.decorator'
 import { GqlAuthGuard } from 'src/guard/auth.guard'
 import { User } from './user.entity'
+import { AuthInputGetCountUser } from './dto/auth-get-count-user.dto'
 
 @Resolver(() => User)
 export class UserResolver {
@@ -43,8 +44,15 @@ export class UserResolver {
   @ResolveField(() => GraphQLInt, {
     name: 'countContract',
   })
-  getCountContractByUserId(@Parent() user: User): Promise<number> {
-    return this.userService.countContractByUserId(user.id)
+  getCountContractByUserId(
+    @Parent() user: User,
+    @Args('authInputGetCountUser', ValidationPipe) // 이부분 input decorator로 해결할 수 있을듯 하다.
+    authInputGetCountUser: AuthInputGetCountUser,
+  ): Promise<number> {
+    return this.userService.countContractByUserId(
+      user.id,
+      authInputGetCountUser.states,
+    )
   }
 
   @Authorize(AuthRole.ADMIN_DEVELOPER)

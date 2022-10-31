@@ -23,7 +23,6 @@ export class User extends BaseEntity {
   @Column({ type: String, name: 'user_id' })
   userId: string
 
-  @Field(() => GraphQLString)
   @Column({ type: String })
   password: string
 

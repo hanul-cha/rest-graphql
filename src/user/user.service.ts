@@ -9,6 +9,7 @@ import { UserRepository } from './user.repository'
 import { AuthInput, AuthRole } from './dto/auth-role.dto'
 import { User } from './user.entity'
 import { ContractRepository } from 'src/contract/contract.repository'
+import { ContractState } from 'src/contract/contract.type'
 
 @Injectable()
 export class UserService {
@@ -55,9 +56,15 @@ export class UserService {
     return user
   }
 
-  async countContractByUserId(id: number): Promise<number> {
+  async countContractByUserId(
+    id: number,
+    states?: ContractState[] | null,
+  ): Promise<number> {
     const ContractQb = this.contractRepository.createQueryBuilder()
     ContractQb.where('contract.user_id = :id', { id })
+    if (states) {
+      ContractQb.andWhere('contract.state in :state', { states })
+    }
     return await ContractQb.getCount()
   }
 

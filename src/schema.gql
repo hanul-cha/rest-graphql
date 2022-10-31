@@ -10,7 +10,6 @@ type AuthSnsImpl {
 type User {
   id: ID!
   userId: String!
-  password: String!
   name: String!
   contents: String
   address: String
@@ -18,13 +17,25 @@ type User {
   questionForSearch: String!
   answerForSearch: String!
   createAt: Timestamp!
-  countContract: Int!
+  countContract(authInputGetCountUser: AuthInputGetCountUser!): Int!
 }
 
 """
 `Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
 """
 scalar Timestamp
+
+input AuthInputGetCountUser {
+  states: [ContractState!]!
+}
+
+enum ContractState {
+  Apply
+  Approve
+  Going
+  Proceeding
+  Stop
+}
 
 type Campaign {
   id: ID!
