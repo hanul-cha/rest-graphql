@@ -62,7 +62,7 @@ export class UserService {
   ): Promise<number> {
     const ContractQb = this.contractRepository.createQueryBuilder()
     ContractQb.where('contract.user_id = :id', { id })
-    if (states) {
+    if (states && states.length > 0) {
       ContractQb.andWhere('contract.state in :state', { states })
     }
     return await ContractQb.getCount()

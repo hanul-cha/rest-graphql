@@ -1,4 +1,5 @@
-import { registerEnumType } from '@nestjs/graphql'
+import { InputType, registerEnumType } from '@nestjs/graphql'
+import { GraphQLList } from 'graphql'
 import { GraphQLInputObjectType } from 'graphql'
 import { GraphQLEnumType } from 'graphql'
 
