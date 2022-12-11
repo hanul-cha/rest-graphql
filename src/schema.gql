@@ -13,6 +13,7 @@ type User {
   name: String!
   contents: String
   address: String
+  jumin: String
   sns: AuthSnsImpl
   questionForSearch: String!
   answerForSearch: String!
@@ -33,7 +34,7 @@ enum ContractState {
   Stop
 }
 
-type Campaign {
+type Project {
   id: ID!
   userId: Int!
   title: String!
@@ -51,8 +52,8 @@ type Campaign {
 type Query {
   signIn(signInAuthInput: SignInAuthInput!): String!
   getUser(id: Int!): User!
-  getAll: Campaign!
-  sameTitleCampaign(title: String!): Boolean!
+  getAll: Project!
+  sameTitleProject(title: String!): Boolean!
 }
 
 input SignInAuthInput {
@@ -63,7 +64,7 @@ input SignInAuthInput {
 type Mutation {
   addRoles(authInput: AuthInput!): User!
   createUser(createUserInput: CreateAuthInput!): User!
-  addCampaign(addCampaignInput: AddCampaignInput!): Campaign!
+  addProject(addProjectInput: AddProjectInput!): Project!
 }
 
 input AuthInput {
@@ -80,7 +81,7 @@ input CreateAuthInput {
   address: String
 }
 
-input AddCampaignInput {
+input AddProjectInput {
   title: String!
   contents: String
   startDate: String

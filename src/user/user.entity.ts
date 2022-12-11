@@ -42,6 +42,10 @@ export class User extends BaseEntity {
   @Column({ type: String, default: null })
   address: string | null
 
+  @Field(() => GraphQLString, { nullable: true })
+  @Column({ type: String, default: null })
+  jumin: string | null
+
   @Field(() => AuthSnsImpl, { nullable: true })
   @Column({ type: 'json', default: null })
   sns: AuthSns[] | null

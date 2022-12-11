@@ -1,6 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql'
 import {
-  IsEnum,
   IsInt,
   IsString,
   MaxLength,
@@ -10,7 +9,7 @@ import {
 import { GraphQLInt, GraphQLString } from 'graphql'
 
 @InputType()
-export class AddCampaignInput {
+export class AddProjectInput {
   @Field()
   @IsString()
   @MinLength(1)

@@ -8,7 +8,7 @@ import { typeORMConfig } from './config/typeorm.config'
 import { UserModule } from './user/user.module'
 import { PassportModule } from '@nestjs/passport'
 import { ContractModule } from './contract/contract.module'
-import { CampaignModule } from './campaign/campaign.module'
+import { ProjectModule } from './project/project.module'
 import { GqlAuthGuard } from './guard/auth.guard'
 
 @Module({
@@ -28,7 +28,7 @@ import { GqlAuthGuard } from './guard/auth.guard'
     TypeOrmModule.forRoot(typeORMConfig),
     UserModule,
     ContractModule,
-    CampaignModule,
+    ProjectModule,
   ],
   providers: [GqlAuthGuard],
 })

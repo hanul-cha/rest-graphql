@@ -4,7 +4,7 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 @ObjectType()
-export class Campaign extends BaseEntity {
+export class Project extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
   id!: number

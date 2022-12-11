@@ -2,9 +2,9 @@ import { getDataSourceToken } from '@nestjs/typeorm'
 import { SourceToken } from 'src/utils/sourceToken'
 
 import { DataSource, Repository } from 'typeorm'
-import { Campaign } from './campaign.entity'
+import { Project } from './project.entity'
 
-export class CampaignRepository extends Repository<Campaign> {
+export class ProjectRepository extends Repository<Project> {
   testWithUser() {
     return this.find({
       where: {
@@ -14,12 +14,12 @@ export class CampaignRepository extends Repository<Campaign> {
   }
 }
 
-export const campaignProvider = [
+export const projectProvider = [
   {
-    provide: SourceToken.Campaign,
+    provide: SourceToken.Project,
     useFactory: (dataSource: DataSource) => {
-      const repository = dataSource.getRepository(Campaign)
-      return new CampaignRepository(
+      const repository = dataSource.getRepository(Project)
+      return new ProjectRepository(
         repository.target,
         repository.manager,
         repository.queryRunner,
