@@ -11,7 +11,7 @@ export class Project extends BaseEntity {
 
   @Field(() => GraphQLInt)
   @Column({ type: Number, name: 'create_user_id' })
-  userId!: number
+  createUserId!: number
 
   @Field(() => GraphQLString)
   @Column({ type: String })
@@ -69,24 +69,6 @@ export class Project extends BaseEntity {
     default: null,
   })
   maximumUserLength: number | null
-
-  @Field(() => GraphQLString, { nullable: true })
-  @Column({
-    type: String,
-    name: 'start_space',
-    nullable: true,
-    default: null,
-  })
-  startSpace: string | null
-
-  @Field(() => GraphQLString, { nullable: true })
-  @Column({
-    type: String,
-    name: 'end_space',
-    nullable: true,
-    default: null,
-  })
-  endSpace: string | null
 
   @Field(() => GraphQLInt)
   @Column({

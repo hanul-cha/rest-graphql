@@ -36,7 +36,7 @@ enum ContractState {
 
 type Project {
   id: ID!
-  userId: Int!
+  createUserId: Int!
   title: String!
   contents: String
   startDate: String
@@ -44,8 +44,6 @@ type Project {
   deadLine: String
   openLink: String
   maximumUserLength: Int
-  startSpace: String
-  endSpace: String
   countLike: Int!
 }
 
@@ -86,8 +84,7 @@ input AddProjectInput {
   contents: String
   startDate: String
   endDate: String
+  deadLine: String
   openLink: String
   maximumUserLength: Int
-  startSpace: String
-  endSpace: String
 }

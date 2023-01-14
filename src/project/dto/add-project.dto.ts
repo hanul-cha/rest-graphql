@@ -34,20 +34,15 @@ export class AddProjectInput {
   @Field(() => GraphQLString, { nullable: true })
   @IsString()
   @ValidateIf((_, value) => value !== null)
+  deadLine: string | null
+
+  @Field(() => GraphQLString, { nullable: true })
+  @IsString()
+  @ValidateIf((_, value) => value !== null)
   openLink: string | null
 
   @Field(() => GraphQLInt, { nullable: true })
   @IsInt()
   @ValidateIf((_, value) => value !== null)
   maximumUserLength: number | null
-
-  @Field(() => GraphQLString, { nullable: true })
-  @IsString()
-  @ValidateIf((_, value) => value !== null)
-  startSpace: string | null
-
-  @Field(() => GraphQLString, { nullable: true })
-  @IsString()
-  @ValidateIf((_, value) => value !== null)
-  endSpace: string | null
 }
