@@ -23,7 +23,7 @@ export class Project extends BaseEntity {
     nullable: true,
     default: null,
   })
-  contents: string | null
+  contents: string | null // db type은 TEXT타입으로 해야함 (배포전 migration작성시 꼭 유의해야함)
 
   @Field(() => GraphQLString, { nullable: true })
   @Column({

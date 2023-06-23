@@ -1,9 +1,8 @@
-import { Field, InputType } from '@nestjs/graphql'
+import { Field, InputType, registerEnumType } from '@nestjs/graphql'
 import { GraphQLEnumType } from 'graphql'
 
 export enum AuthRole {
   ADMIN_USER = 'admin::user', // 일반사용자
-
   ADMIN_GUEST = 'admin::guest',
   ADMIN_DEVELOPER = 'admin::developer', // 개발자 (전체권한)
 }
@@ -34,3 +33,5 @@ export class AuthInput {
   @Field()
   userId: string
 }
+
+registerEnumType(AuthRole, { name: 'AuthRole' })

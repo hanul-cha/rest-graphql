@@ -47,7 +47,7 @@ export class UserService {
       await this.userRepository.save(user)
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
-        throw new ApolloError('중복된 아이디 입니다.', 'ER_DUP_ENTRY')
+        throw new ApolloError('중복된 아이디 입니다.', 'ER_DUP_ENTRY') // TODO: 여기서 apollo에러를 던지면 안되지 ㄷㄷ... service는 apollo를 몰라야한다...
       } else {
         throw new ApolloError(err)
       }

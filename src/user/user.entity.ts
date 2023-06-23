@@ -1,4 +1,10 @@
-import { Field, GraphQLTimestamp, ObjectType } from '@nestjs/graphql'
+import {
+  Field,
+  GraphQLTimestamp,
+  ObjectType,
+  Parent,
+  ResolveField,
+} from '@nestjs/graphql'
 import { GraphQLID, GraphQLString } from 'graphql'
 import {
   BaseEntity,
@@ -19,7 +25,9 @@ export class User extends BaseEntity {
   @Field(() => GraphQLID)
   id: number
 
-  @Field(() => GraphQLString)
+  /**
+   * A string user's id
+   */
   @Column({ type: String, name: 'user_id' })
   userId: string
 
@@ -70,14 +78,14 @@ export class User extends BaseEntity {
   })
   answerForSearch: string
 
-  @Field(() => GraphQLTimestamp)
+  @Field()
   @Column({
     type: 'timestamp',
     name: 'created_at',
     readonly: true,
     default: () => 'CURRENT_TIMESTAMP',
   })
-  createAt: number
+  createAt: User
 
   @Column({
     type: 'timestamp',

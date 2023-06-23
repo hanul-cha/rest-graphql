@@ -17,7 +17,7 @@ export class Contract extends BaseEntity {
   @Column({ type: Number, name: 'project_id' })
   projectId: number
 
-  @Field(() => GraphQLContractState)
+  @Field(() => ContractState)
   @Column({ type: String })
   state: ContractState
 

@@ -12,7 +12,6 @@ export class UserRepository extends Repository<User> {
     })
   }
 }
-
 export const userProvider = [
   {
     provide: SourceToken.User,

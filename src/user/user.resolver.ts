@@ -7,6 +7,7 @@ import {
   Query as normalQuery,
   ResolveField,
   Resolver,
+  Subscription,
 } from '@nestjs/graphql'
 import { UserService } from './user.service'
 import { CreateAuthInput } from './dto/create-auth-credential.dto'
@@ -19,9 +20,13 @@ import { Authorize } from 'src/decorators/roles.decorator'
 import { GqlAuthGuard } from 'src/guard/auth.guard'
 import { User } from './user.entity'
 import { ContractState } from 'src/contract/contract.type'
+import { Client, ClientProxy, Transport } from '@nestjs/microservices'
 
 @Resolver(() => User)
 export class UserResolver {
+  @Client({ transport: Transport.TCP })
+  client: ClientProxy
+
   constructor(private userService: UserService) {}
 
   @normalQuery(() => {
@@ -30,12 +35,16 @@ export class UserResolver {
   signIn(
     @Args('signInAuthInput', ValidationPipe) signInAuthInput: SignInAuthInput,
   ): Promise<string> {
+    this.client.emit('hello', 'hello').subscribe
     return this.userService.signIn(signInAuthInput)
   }
 
   @Query({
     roles: [AuthRole.ADMIN_GUEST, AuthRole.ADMIN_USER],
     return: User,
+    options: {
+      name: 'getUser',
+    },
   })
   getUser(@Args('id', { type: () => Int }) id: number): Promise<User> {
     return this.userService.getUser(id)

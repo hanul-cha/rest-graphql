@@ -19,13 +19,11 @@ interface QueryOption {
 // GqlAuthGuard 가드는 홀로 사용 가능하지만 RolesGuard는 req.user를 넘겨주는 가드와 사용가능합니다.
 export const Query = (option?: QueryOption) => {
   const optionsQuery = () => {
-    if (option) {
-      if (option.return) {
-        const returnOption = option.return
-        return normalQuery(() => {
-          return returnOption
-        }, option.options)
-      }
+    if (option && option.return) {
+      const returnOption = option.return
+      return normalQuery(() => {
+        return returnOption
+      }, option.options)
     }
     return normalQuery()
   }
@@ -39,13 +37,11 @@ export const Query = (option?: QueryOption) => {
 
 export const Mutation = (option?: QueryOption) => {
   const optionsMutation = () => {
-    if (option) {
-      if (option.return) {
-        const returnOption = option.return
-        return normalMutation(() => {
-          return returnOption
-        }, option.options)
-      }
+    if (option && option.return) {
+      const returnOption = option.return
+      return normalMutation(() => {
+        return returnOption
+      }, option.options)
     }
     return normalMutation()
   }

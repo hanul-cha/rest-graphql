@@ -27,7 +27,7 @@ export class GqlAuthGuard extends AuthGuard('jwt') {
   }
 
   //getRequest, canActivate
-  /* 
+  /*
     canActivate는 검증만 진행할 뿐 JwtStrategy.validate를 실행시켜주지 않음
     내예상엔 JwtStrategy.validate에서 req.authorization에 접근하는데 여기서 req를 리턴안해주면
     찾지를 못하는듯 함

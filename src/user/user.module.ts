@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common'
+import { Global, MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { UserResolver } from './user.resolver'
 import { PassportModule } from '@nestjs/passport'
 import { JwtModule } from '@nestjs/jwt'
@@ -6,6 +6,14 @@ import { JwtStrategy } from '../role/jwt.strategy'
 import { userProvider } from './user.repository'
 import { UserService } from './user.service'
 import { contractProvider } from 'src/contract/contract.repository'
+import { ProjectResolver } from 'src/project/project.resolver'
+import { ClientTCP, RpcException } from '@nestjs/microservices'
+
+class ErrorHandlingProxy extends ClientTCP {
+  serializeError(err: Error) {
+    return new RpcException(err)
+  }
+}
 
 @Global()
 @Module({
@@ -22,6 +30,7 @@ import { contractProvider } from 'src/contract/contract.repository'
   providers: [
     UserService,
     UserResolver,
+    // ProjectResolver,
     JwtStrategy,
     ...userProvider,
     ...contractProvider,
